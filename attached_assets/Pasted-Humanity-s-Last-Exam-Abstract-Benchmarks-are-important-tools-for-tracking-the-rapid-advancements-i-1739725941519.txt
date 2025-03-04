@@ -1,0 +1,1012 @@
+Humanity’s Last Exam
+Abstract
+Benchmarks are important tools for tracking the rapid advancements in large language model (LLM) capabilities. However, benchmarks are not keeping pace in difficulty: LLMs now achieve over 90% accuracy on popular benchmarks like MMLU, limiting informed measurement of state-of-the-art LLM capabilities. In response, we introduce Humanity’s Last Exam (HLE), a multi-modal benchmark at the frontier of human knowledge, designed to be the final closed-ended academic benchmark of its kind with broad subject coverage. HLE consists of 
+2
+,
+700
+ questions across dozens of subjects, including mathematics, humanities, and the natural sciences. HLE is developed globally by subject-matter experts and consists of multiple-choice and short-answer questions suitable for automated grading. Each question has a known solution that is unambiguous and easily verifiable, but cannot be quickly answered via internet retrieval. State-of-the-art LLMs demonstrate low accuracy and calibration on HLE, highlighting a significant gap between current LLM capabilities and the expert human frontier on closed-ended academic questions. To inform research and policymaking upon a clear understanding of model capabilities, we publicly release HLE at https://lastexam.ai.
+
+Organizing Team
+Long Phan∗1, Alice Gatti∗1, Ziwen Han∗2, Nathaniel Li∗1,
+
+Josephina Hu2, Hugh Zhang‡, Chen Bo Calvin Zhang2, Mohamed Shaaban2, John Ling2, Sean Shi2, Michael Choi2, Anish Agrawal2, Arnav Chopra2, Adam Khoja1, Ryan Kim†, Richard Ren1, Jason Hausenloy1, Oliver Zhang1, Mantas Mazeika1,
+
+Summer Yue∗∗2, Alexandr Wang∗∗2, Dan Hendrycks∗∗1
+
+1 Center for AI Safety, 2 Scale AI
+
+†
+Dataset Contributors
+Tung Nguyen, Daron Anderson, Imad Ali Shah, Mikhail Doroshenko, Alun Cennyth Stokes, Mobeen Mahmood, Jaeho Lee, Oleksandr Pokutnyi, Oleg Iskra, Jessica P. Wang, Robert Gerbicz, John-Clark Levin, Serguei Popov, Fiona Feng, Steven Y. Feng, Haoran Zhao, Michael Yu, Varun Gangal, Chelsea Zou, Zihan Wang, Mstyslav Kazakov, Geoff Galgon, Johannes Schmitt, Alvaro Sanchez, Yongki Lee, Will Yeadon, Scott Sauers, Marc Roth, Chidozie Agu, Søren Riis, Fabian Giska, Saiteja Utpala, Antrell Cheatom, Zachary Giboney, Gashaw M. Goshu, Sarah-Jane Crowson, Mohinder Maheshbhai Naiya, Noah Burns, Lennart Finke, Zerui Cheng, Hyunwoo Park, Francesco Fournier-Facio, Jennifer Zampese, John Wydallis, John B. Wydallis, Ryan G. Hoerr, Mark Nandor, Tim Gehrunger, Jiaqi Cai, Ben McCarty, Jungbae Nam, Edwin Taylor, Jun Jin, Gautier Abou Loume, Hangrui Cao, Alexis C Garretson, Damien Sileo, Qiuyu Ren, Doru Cojoc, Pavel Arkhipov, Usman Qazi, Aras Bacho, Lianghui Li, Sumeet Motwani, Christian Schroeder de Witt, Alexei Kopylov, Johannes Veith, Eric Singer, Paolo Rissone, Jaehyeok Jin, Jack Wei Lun Shi, Chris G. Willcocks, Ameya Prabhu, Longke Tang, Kevin Zhou, Emily de Oliveira Santos, Andrey Pupasov Maksimov, Edward Vendrow, Kengo Zenitani, Joshua Robinson, Aleksandar Mikov, Julien Guillod, Yuqi Li, Ben Pageler, Joshua Vendrow, Vladyslav Kuchkin, Pierre Marion, Denis Efremov, Jayson Lynch, Kaiqu Liang, Andrew Gritsevskiy, Dakotah Martinez, Nick Crispino, Dimitri Zvonkine, Natanael Wildner Fraga, Saeed Soori, Ori Press, Henry Tang, Julian Salazar, Sean R. Green, Lina Brüssel, Moon Twayana, Aymeric Dieuleveut, T. Ryan Rogers, Wenjin Zhang, Ross Finocchio, Bikun Li, Jinzhou Yang, Arun Rao, Gabriel Loiseau, Mikhail Kalinin, Marco Lukas, Ciprian Manolescu, Nate Stambaugh, Subrata Mishra, Ariel Ghislain Kemogne Kamdoum, Tad Hogg, Alvin Jin, Carlo Bosio, Gongbo Sun, Brian P Coppola, Haline Heidinger, Rafael Sayous, Stefan Ivanov, Joseph M Cavanagh, Jiawei Shen, Joseph Marvin Imperial, Philippe Schwaller, Shaipranesh Senthilkuma, Andres M Bran, Andres Algaba, Brecht Verbeken, Kelsey Van den Houte, Lynn Van Der Sypt, David Noever, Lisa Schut, Ilia Sucholutsky, Evgenii Zheltonozhskii, Qiaochu Yuan, Derek Lim, Richard Stanley, Shankar Sivarajan, Tong Yang, John Maar, Julian Wykowski, Martí Oller, Jennifer Sandlin, Anmol Sahu, Cesare Giulio Ardito, Yuzheng Hu, Felipe Meneguitti Dias, Tobias Kreiman, Kaivalya Rawal, Tobias Garcia Vilchis, Yuexuan Zu, Martin Lackner, James Koppel, Jeremy Nguyen, Daniil S. Antonenko, Steffi Chern, Bingchen Zhao, Pierrot Arsene, Sergey Ivanov, Rafał Poświata, Chenguang Wang, Daofeng Li, Donato Crisostomi, Ali Dehghan, Andrea Achilleos, John Arnold Ambay, Benjamin Myklebust, Archan Sen, David Perrella, Nurdin Kaparov, Mark H Inlow, Allen Zang, Kalyan Ramakrishnan, Daniil Orel, Vladislav Poritski, Shalev Ben-David, Zachary Berger, Parker Whitfill, Michael Foster, Daniel Munro, Linh Ho, Dan Bar Hava, Aleksey Kuchkin, Robert Lauff, David Holmes, Frank Sommerhage, Anji Zhang, Richard Moat, Keith Schneider, Daniel Pyda, Zakayo Kazibwe, Mukhwinder Singh, Don Clarke, Dae Hyun Kim, Sara Fish, Veit Elser, Victor Efren Guadarrama Vilchis, Immo Klose, Christoph Demian, Ujjwala Anantheswaran, Adam Zweiger, Guglielmo Albani, Jeffery Li, Nicolas Daans, Maksim Radionov, Václav Rozhoň, Vincent Ginis, Ziqiao Ma, Christian Stump, Jacob Platnick, Volodymyr Nevirkovets, Luke Basler, Marco Piccardo, Niv Cohen, Virendra Singh, Josef Tkadlec, Paul Rosu, Alan Goldfarb, Piotr Padlewski, Stanislaw Barzowski, Kyle Montgomery, Aline Menezes, Arkil Patel, Zixuan Wang, Jamie Tucker-Foltz, Jack Stade, Declan Grabb, Tom Goertzen, Fereshteh Kazemi, Jeremiah Milbauer, Abhishek Shukla, Hossam Elgnainy, Yan Carlos Leyva Labrador, Hao He, Ling Zhang, Alan Givré, Hew Wolff, Gözdenur Demir, Muhammad Fayez Aziz, Younesse Kaddar, Ivar Ängquist, Yanxu Chen, Elliott Thornley, Robin Zhang, Jiayi Pan, Antonio Terpin, Niklas Muennighoff, Hailey Schoelkopf, Eric Zheng, Avishy Carmi, Jainam Shah, Ethan D. L. Brown, Kelin Zhu, Max Bartolo, Richard Wheeler, Andrew Ho, Shaul Barkan, Jiaqi Wang, Martin Stehberger, Egor Kretov, Peter Bradshaw, JP Heimonen, Kaustubh Sridhar, Zaki Hossain, Ido Akov, Yury Makarychev, Joanna Tam, Hieu Hoang, David M. Cunningham, Vladimir Goryachev, Demosthenes Patramanis, Michael Krause, Andrew Redenti, David Aldous, Jesyin Lai, Shannon Coleman, Jiangnan Xu, Sangwon Lee, Ilias Magoulas, Sandy Zhao, Ning Tang, Michael K. Cohen, Micah Carroll, Orr Paradise, Jan Hendrik Kirchner, Stefan Steinerberger, Maksym Ovchynnikov, Jason O. Matos, Adithya Shenoy, Michael Wang, Yuzhou Nie, Paolo Giordano, Philipp Petersen, Anna Sztyber-Betley, Paolo Faraboschi, Robin Riblet, Jonathan Crozier, Shiv Halasyamani, Antonella Pinto, Shreyas Verma, Prashant Joshi, Eli Meril, Zheng-Xin Yong, Allison Tee, Jérémy Andréoletti, Orion Weller, Raghav Singhal, Gang Zhang, Alexander Ivanov, Seri Khoury, Nils Gustafsson, Hamid Mostaghimi, Kunvar Thaman, Qijia Chen, Tran Quoc Khánh, Jacob Loader, Stefano Cavalleri, Hannah Szlyk, Zachary Brown, Himanshu Narayan, Jonathan Roberts, William Alley, Kunyang Sun, Ryan Stendall, Max Lamparth, Anka Reuel, Ting Wang, Hanmeng Xu, Pablo Hernández-Cámara, Freddie Martin, Thomas Preu, Tomek Korbak, Marcus Abramovitch, Dominic Williamson, Ida Bosio, Ziye Chen, Biró Bálint, Eve J. Y. Lo, Maria Inês S. Nunes, Yibo Jiang, M Saiful Bari, Peyman Kassani, Zihao Wang, Behzad Ansarinejad, Yewen Sun, Stephane Durand, Guillaume Douville, Daniel Tordera, George Balabanian, Earth Anderson, Lynna Kvistad, Alejandro José Moyano, Hsiaoyun Milliron, Ahmad Sakor, Murat Eron, Isaac C. McAlister, Andrew Favre D.O., Shailesh Shah, Xiaoxiang Zhou, Firuz Kamalov, Ronald Clark, Sherwin Abdoli, Tim Santens, Harrison K Wang, Evan Chen, Alessandro Tomasiello, G. Bruno De Luca, Shi-Zhuo Looi, Vinh-Kha Le, Noam Kolt, Niels Mündler, Avi Semler, Emma Rodman, Jacob Drori, Carl J Fossum, Luk Gloor, Milind Jagota, Ronak Pradeep, Honglu Fan, Tej Shah, Jonathan Eicher, Michael Chen, Kushal Thaman, William Merrill, Moritz Firsching, Carter Harris, \textcommabelowStefan Ciobâcă, Jason Gross, Rohan Pandey, Ilya Gusev, Adam Jones, Shashank Agnihotri, Pavel Zhelnov, Siranut Usawasutsakorn, Mohammadreza Mofayezi, Alexander Piperski, Marc Carauleanu, David K. Zhang, Kostiantyn Dobarskyi, Dylan Ler, Roman Leventov, Ignat Soroko, Thorben Jansen, Scott Creighton, Pascal Lauer, Joshua Duersch, Vage Taamazyan, Dario Bezzi, Wiktor Morak, Wenjie Ma, William Held, Tran Đuc Huy, Ruicheng Xian, Armel Randy Zebaze, Mohanad Mohamed, Julian Noah Leser, Michelle X Yuan, Laila Yacar, Johannes Lengler, Katarzyna Olszewska, Hossein Shahrtash, Edson Oliveira, Joseph W. Jackson, Daniel Espinosa Gonzalez, Andy Zou, Muthu Chidambaram, Timothy Manik, Hector Haffenden, Dashiell Stander, Ali Dasouqi, Alexander Shen, Emilien Duc, Bita Golshani, David Stap, Mikalai Uzhou, Alina Borisovna Zhidkovskaya, Lukas Lewark, Miguel Orbegozo Rodriguez, Mátyás Vincze, Dustin Wehr, Colin Tang, Shaun Phillips, Fortuna Samuele, Jiang Muzhen, Fredrik Ekström, Angela Hammon, Oam Patel, Faraz Farhidi, George Medley, Forough Mohammadzadeh, Madellene Peñaflor, Haile Kassahun, Alena Friedrich, Claire Sparrow, Rayner Hernandez Perez, Taom Sakal, Omkar Dhamane, Ali Khajegili Mirabadi, Eric Hallman, Kenchi Okutsu, Mike Battaglia, Mohammad Maghsoudimehrabani, Alon Amit, Dave Hulbert, Roberto Pereira, Simon Weber, Handoko, Anton Peristyy, Stephen Malina, Samuel Albanie, Will Cai, Mustafa Mehkary, Rami Aly, Frank Reidegeld, Anna-Katharina Dick, Cary Friday, Jasdeep Sidhu, Hassan Shapourian, Wanyoung Kim, Mariana Costa, Hubeyb Gurdogan, Brian Weber, Harsh Kumar, Tong Jiang, Arunim Agarwal, Chiara Ceconello, Warren S. Vaz, Chao Zhuang, Haon Park, Andrew R. Tawfeek, Daattavya Aggarwal, Michael Kirchhof, Linjie Dai, Evan Kim, Johan Ferret, Yuzhou Wang, Minghao Yan, Krzysztof Burdzy, Lixin Zhang, Antonio Franca, Diana T. Pham, Kang Yong Loh, Joshua Robinson, Abram Jackson, Shreen Gul, Gunjan Chhablani, Zhehang Du, Adrian Cosma, Jesus Colino, Colin White, Jacob Votava, Vladimir Vinnikov, Ethan Delaney, Petr Spelda, Vit Stritecky, Syed M. Shahid, Jean-Christophe Mourrat, Lavr Vetoshkin, Koen Sponselee, Renas Bacho, Florencia de la Rosa, Xiuyu Li, Guillaume Malod, Leon Lang, Julien Laurendeau, Dmitry Kazakov, Fatimah Adesanya, Julien Portier, Lawrence Hollom, Victor Souza, Yuchen Anna Zhou, Julien Degorre, Yiğit Yalın, Gbenga Daniel Obikoya, Luca Arnaboldi, Rai (Michael Pokorny), Filippo Bigi, M.C. Boscá, Oleg Shumar, Kaniuar Bacho, Pierre Clavier, Gabriel Recchia, Mara Popescu, Nikita Shulga, Ngefor Mildred Tanwie, Denis Peskoff, Thomas C.H. Lux, Ben Rank, Colin Ni, Matthew Brooks, Alesia Yakimchyk, Huanxu (Quinn) Liu, Olle Häggström, Emil Verkama, Hans Gundlach, Leonor Brito-Santana, Brian Amaro, Vivek Vajipey, Rynaa Grover, Yiyang Fan, Gabriel Poesia Reis e Silva, Linwei Xin, Yosi Kratish, Jakub Łucki, Wen-Ding Li, Sivakanth Gopi, Andrea Caciolai, Justin Xu, Kevin Joseph Scaria, Freddie Vargus, Farzad Habibi, Long (Tony) Lian, Emanuele Rodolà, Jules Robins, Vincent Cheng, Tony Fruhauff, Brad Raynor, Hao Qi, Xi Jiang, Ben Segev, Jingxuan Fan, Sarah Martinson, Erik Y. Wang, Kaylie Hausknecht, Michael P. Brenner, Mao Mao, Xinyu Zhang, David Avagian, Eshawn Jessica Scipio, Alon Ragoler, Justin Tan, Blake Sims, Rebeka Plecnik, Aaron Kirtland, Omer Faruk Bodur, D.P. Shinde, Zahra Adoul, Mohamed Zekry, Ali Karakoc, Tania C. B. Santos, Samir Shamseldeen, Loukmane Karim, Anna Liakhovitskaia, Nate Resman, Nicholas Farina, Juan Carlos Gonzalez, Gabe Maayan, Sarah Hoback, Rodrigo De Oliveira Pena, Glen Sherman, Elizabeth Kelley, Hodjat Mariji, Rasoul Pouriamanesh, Wentao Wu, Sandra Mendoza, Ismail Alarab, Joshua Cole, Danyelle Ferreira, Bryan Johnson, Mohammad Safdari, Liangti Dai, Siriphan Arthornthurasuk, Alexey Pronin, Jing Fan, Angel Ramirez-Trinidad, Ashley Cartwright, Daphiny Pottmaier, Omid Taheri, David Outevsky, Stanley Stepanic, Samuel Perry, Luke Askew, Raúl Adrián Huerta Rodríguez, Ali M. R. Minissi, Sam Ali, Ricardo Lorena, Krishnamurthy Iyer, Arshad Anil Fasiludeen, Sk Md Salauddin, Murat Islam, Juan Gonzalez, Josh Ducey, Maja Somrak, Vasilios Mavroudis, Eric Vergo, Juehang Qin, Benjámin Borbás, Eric Chu, Jack Lindsey, Anil Radhakrishnan, Antoine Jallon, I.M.J. McInnis, Pawan Kumar, Laxman Prasad Goswami, Daniel Bugas, Nasser Heydari, Ferenc Jeanplong, Archimedes Apronti, Abdallah Galal, Ng Ze-An, Ankit Singh, Joan of Arc Xavier, Kanu Priya Agarwal, Mohammed Berkani, Benedito Alves de Oliveira Junior, Dmitry Malishev, Nicolas Remy, Taylor D. Hartman, Tim Tarver, Stephen Mensah, Javier Gimenez, Roselynn Grace Montecillo, Russell Campbell, Asankhaya Sharma, Khalida Meer, Xavier Alapont, Deepakkumar Patil, Rajat Maheshwari, Abdelkader Dendane, Priti Shukla, Sergei Bogdanov, Sören Möller, Muhammad Rehan Siddiqi, Prajvi Saxena, Himanshu Gupta, Innocent Enyekwe, Ragavendran P V, Zienab EL-Wasif, Aleksandr Maksapetyan, Vivien Rossbach, Chris Harjadi, Mohsen Bahaloohoreh, Song Bian, John Lai, Justine Leon Uro, Greg Bateman, Mohamed Sayed, Ahmed Menshawy, Darling Duclosel, Yashaswini Jain, Ashley Aaron, Murat Tiryakioglu, Sheeshram Siddh, Keith Krenek, Alex Hoover, Joseph McGowan, Tejal Patwardhan
+
+†
+1Introduction
+The capabilities of large language models (LLMs) have progressed dramatically, exceeding human performance across a diverse array of tasks. To systematically measure these capabilities, LLMs are evaluated upon benchmarks: collections of questions which assess model performance on tasks such as math, programming, or biology. However, state-of-the-art LLMs [34, 49, 37, 16, 3, 56, 14] now achieve over 90% accuracy on popular benchmarks such as MMLU [21], which were once challenging frontiers for LLMs. The saturation of existing benchmarks, as shown in Figure 1, limits our ability to precisely measure AI capabilities and calls for more challenging evaluations that can meaningfully assess the rapid improvements in LLM capabilities at the frontiers of human knowledge.
+
+To address this gap, we introduce Humanity’s Last Exam (HLE), a benchmark of 
+2
+,
+700
+ extremely challenging questions from dozens of subject areas, designed to be the final closed-ended benchmark of broad academic capabilities. HLE is developed by academics and domain experts, providing a precise measure of capabilities as LLMs continue to improve (Section 3.1). HLE is multi-modal, featuring questions that are either text-only or accompanied by an image reference, and includes both multiple-choice and exact-match questions for automated answer verification. Questions are original, precise, unambiguous, and resistant to simple internet lookup or database retrieval. Amongst the diversity of questions in the benchmark, HLE emphasizes world-class mathematics problems aimed at testing deep reasoning skills broadly applicable across multiple academic areas.
+
+We employ a multi-stage review process to thoroughly ensure question difficulty and quality (Section 3.2). Before submission, each question is tested against state-of-the-art LLMs to verify its difficulty - questions are rejected if LLMs can answer them correctly. Questions submitted then proceed through a two-stage reviewing process: (1) an initial feedback round with multiple graduate-level reviewers and (2) organizer and expert reviewer approval, ensuring quality and adherence to our submission criteria. Following release, we plan to further conduct a public review period, welcoming community feedback to correct any points of concern in the dataset.
+
+Frontier LLMs consistently demonstrate low accuracy (less than 10%) across all models, highlighting a significant gap between current capabilities and expert-level academic performance (Section 4). Models also provide incorrect answers with high confidence rather than acknowledging uncertainty on these challenging questions, with RMS calibration errors above 80% across all models.
+
+Refer to caption
+Figure 1:Compared against the saturation of some existing benchmarks, Humanity’s Last Exam accuracy remains low across several frontier models, demonstrating its effectiveness for measuring advanced, closed-ended, academic capabilities. The sources for our evaluation metrics are detailed in Section C.5. We further evaluate more frontier models on HLE in Table 1.
+As AI systems approach human expert performance in many domains, precise measurement of their capabilities and limitations is essential for informing research, governance, and the broader public. High performance on HLE would suggest expert-level capabilities on closed-ended academic questions. To establish a common reference point for assessing these capabilities, we publicly release a large number of 
+2
+,
+700
+ questions from HLE to enable this precise measurement, while maintaining a private test set to assess potential model overfitting.
+
+Refer to caption
+Figure 2:Samples of the diverse and challenging questions submitted to Humanity’s Last Exam.
+Refer to caption
+Figure 3:HLE consists of 
+2
+,
+700
+ exam questions in over a hundred subjects, grouped into high level categories here. We provide a more detailed list of subjects in Section B.3.
+2Related Work
+LLM Benchmarks.
+Benchmarks are important tools for tracking the rapid advancement of LLM capabilities, including scientific [21, 30, 44, 53, 29, 10, 47, 12, 61] and mathematical reasoning [22, 31, 13, 18, 45, 19, 17, 50], code generation [10, 60, 26, 11, 20, 9, 6], and general-purpose human assistance [7, 47, 54, 40, 42, 43, 8, 1, 25]. Due to their objectivity and ease of automated scoring at scale, evaluations commonly include multiple-choice and short-answer questions [42, 51, 52, 58, 15], with benchmarks such as MMLU [21] also spanning a broad range of academic disciplines and levels of complexity.
+
+Saturation and Frontier Benchmark Design.
+However, state-of-the-art models now achieve nearly perfect scores on many existing evaluations [34, 49, 37, 16, 3, 56, 14], obscuring the full extent of current and future frontier AI capabilities [38, 39, 27, 32]. This has motivated the development of more challenging benchmarks which test for multi-modal capabilities [10, 53, 48, 59, 2, 28, 31, 26, 57, 46], strengthen existing benchmarks [53, 48, 24, 45, 43], filter questions over multiple stages of review [33, 30, 44, 18, 27], and employ experts to write tests for advanced academic knowledge [44, 30, 18, 41, 34, 5]. HLE combines these approaches: the questions are developed by subject-matter experts and undergo multiple rounds of review, while preserving the broad subject-matter coverage of MMLU. As a result, HLE provides a clear measurement of the gap between current AI capabilities and human expertise on closed-ended academic tasks, complementing other assessments of advanced capabilities in open-ended domains [36, 10, 55, 35].
+
+3Dataset
+Humanity’s Last Exam (HLE) consists of 
+2
+,
+700
+ challenging questions across over a hundred subjects. A high level summary is provided in Figure 3. We publicly release these questions, while maintaining a private test set of held out questions to assess model overfitting.
+
+3.1Collection
+HLE is a global collaborative effort, with questions from nearly 1000 subject expert contributors affiliated with over 500 institutions across 50 countries – comprised mostly of professors, researchers, and graduate degree holders.
+
+Question Style.
+HLE contains two question formats: exact-match questions (models provide an exact string as output) and multiple-choice questions (the model selects one of five or more answer choices). HLE is a multi-modal benchmark, with 10% of questions requiring comprehending both text and an image reference. 80% of questions are exact-match with the remainder being multiple-choice.
+
+Each question submission includes several required components: the question text itself, answer specifications (either an an exact-match answer, or multiple-choice options with the correct answer marked), detailed rationale explaining the solution, academic subject, and contributor name and institutional affiliation to maintain accountability and accuracy.
+
+Submission Format.
+To ensure question quality and integrity, we enforce strict submission criteria. Questions should be precise, unambiguous, solvable, and non-searchable, ensuring models cannot rely on memorization or simple retrieval methods. All submissions must be original work or non-trivial syntheses of published information, though contributions from unpublished research are acceptable. Questions typically require graduate-level expertise or test knowledge of highly specific topics (e.g., precise historical details, trivia, local customs) and have specific, unambiguous answers accepted by domain experts. When LLMs provide correct answers with faulty reasoning, authors are encouraged to modify question parameters, such as the number of answer choices, to discourage false positives. We require clear English with precise technical terminology, supporting LaTeX notation wherever necessary. Answers are kept short and easily verifiable for exact-match questions to support automatic grading. We prohibit open-ended questions, subjective interpretations, and content related to weapons of mass destruction. Finally, every question is accompanied by a detailed solution to verify accuracy.
+
+Prize Pool.
+To attract high-quality submissions, we establish a $
+500
+,
+000
+ USD prize pool, with prizes of $
+5
+,
+000
+ USD for each of the top 50 questions and $
+500
+ USD for each of the next 500 questions, as determined by organizers. This incentive structure, combined with the opportunity for paper co-authorship for anyone with an accepted question in HLE, draws participation from qualified experts, particularly those with advanced degrees or significant technical experience in their fields.
+
+3.2Review
+Refer to caption
+Figure 4:Dataset creation pipeline. We accept questions that make frontier LLMs fail, then iteratively refine them with the help of expert peer reviewers. Each question is then manually approved by organizers or expert reviewers trained by organizers. A private held-out set is kept in addition to the public set to assess model overfitting and gaming on the public benchmark.
+LLM Difficulty Check
+To ensure question difficulty, each question is first validated against several frontier LLMs prior to submission (Section B.1). If the LLMs cannot solve the question (or in the case of multiple choices, if the models on average do worse than random guessing), the question proceeds to the next stage: human expert review. In total, we logged over 70,000 attempts, resulting in approximately 13,000 questions which stumped LLMs that were forwarded to expert human review.
+
+Expert Review
+Our human reviewers possess a graduate degree (eg. Master’s, PhD, JD, etc.) in their fields. Reviewers select submissions in their domain, grading them against standardized rubrics and offering feedback when applicable. There are two rounds of reviews. The first round focuses on iteratively refining submissions, with each question receiving between 1-3 reviews. In the second round, good and outstanding questions from the first round are identified and approved by organizers and reviewers to be included in the final HLE dataset. Details, instructions, and rubrics for both rounds can be found in Section B.2. Figure 4 details our full process.
+
+Due to the advanced, specialized nature of many submissions, reviewers were not expected to verify the full accuracy of each provided solution rationale if it would take more than five minutes, instead focusing on whether the question aligns with guidelines. Given this limitation in the review process, we welcome community feedback. After initial release, we plan to conduct a public feedback period and periodically update the dataset, assessing any points of concern from the research community.
+
+4Evaluation
+We evaluate the performance of state-of-the-art LLMs on HLE and analyze their capabilities across different question types and domains. We describe our evaluation setup (Section 4.1) and present several quantitative results on metrics that track model performance (Section 4.2).
+
+4.1Setup
+After data collection and review, we evaluated our final HLE dataset on additional frontier multi-modal LLMs. We employ a standardized system prompt that structures model responses into explicit reasoning followed by a final answer. As the question-answers are precise and close-ended, we use GPT-4o as a judge to verify answer correctness against model predictions while accounting for equivalent formats (e.g., decimals vs. fractions or estimations). Evaluation prompts are detailed in Section C.1.1, and exact model versions are provided in Section C.4.
+
+4.2Quantitative Results
+Accuracy.
+All frontier models achieve low accuracy on HLE (Table 1), highlighting significant room for improvement in narrowing the gap between current LLMs and expert-level academic capabilities on closed-ended questions. These low scores are partially by design – the dataset collection process (Section 3.1) attempts to filter out questions that existing models can answer correctly. Nevertheless, we notice upon evaluation, models exhibit non-zero accuracy. This is due to inherent noise in model inference – models can inconsistently guess the right answer or guess worse than random chance for multiple choice questions. We choose to leave these questions in the dataset as a natural component instead of strongly adversarially filtering. However, we stress the true capability floor of frontier models on the dataset will remain an open question and small inflections close to zero accuracy are not strongly indicative of progress.
+
+Calibration Error.
+Given low performance on HLE, models should be calibrated, recognizing their uncertainty rather than confidently provide incorrect answers, indicative of confabulation/hallucination. To measure calibration, we prompt models to provide both an answer and their confidence from 0% to 100% (Section C.1.1), employing the setup from Wei et al. [54]. The implementation of our RMS calibration error is from Hendrycks et al. [23]. A well-calibrated model’s stated confidence should match its actual accuracy – for example, achieving 50% accuracy on questions where it claims 50% confidence. Table 1 reveals poor calibration across all models, reflected in high RMS calibration error scores. Models frequently provide incorrect answers with high confidence on HLE, failing to recognize when questions exceed their capabilities.
+
+Model	Accuracy (%) 
+↑
+Calibration Error (%) 
+↓
+GPT-4o	
+3.1
+92.3
+Grok 2	
+3.9
+90.8
+Claude 3.5 Sonnet	
+4.8
+88.5
+Gemini 1.5 Pro	
+5.2
+93.0
+Gemini 2.0 Flash Thinking	
+7.2
+90.6
+o1	
+8.8
+92.8
+DeepSeek-R1∗	
+8.6
+81.4
+o3-mini (medium)∗	
+11.1
+91.5
+o3-mini (high)∗	
+14.0
+92.8
+Table 1:Accuracy and RMS calibration error of different models on HLE, demonstrating low accuracy and high calibration error across all models, indicative of hallucination. ∗Model is not multi-modal, evaluated on text-only subset. We report text-only results on all models in Section C.2.
+Refer to caption
+Figure 5:Average completion token counts of reasoning models tested, including both reasoning and output tokens. We also plot average token counts for non-reasoning models in Section C.3.
+Token Counts.
+Models with reasoning require substantially more inference time compute. To shed light on this in our evaluation, we analyze the number of completion tokens used across models. As shown in Figure 5, all reasoning models require generating significantly more tokens compared to non-reasoning models for an improvement in performance (Section C.3). We emphasize that future models should not only do better in terms of accuracy, but also strive to be compute-optimal.
+
+5Discussion
+Future Model Performance.
+While current LLMs achieve very low accuracy on HLE, recent history shows benchmarks are quickly saturated – with models dramatically progressing from near-zero to near-perfect performance in a short timeframe [44, 12]. Given the rapid pace of AI development, it is plausible that models could exceed 50% accuracy on HLE by the end of 2025. High accuracy on HLE would demonstrate expert-level performance on closed-ended, verifiable questions and cutting-edge scientific knowledge, but it would not alone suggest autonomous research capabilities or “artificial general intelligence.” HLE tests structured academic problems rather than open-ended research or creative problem-solving abilities, making it a focused measure of technical knowledge and reasoning. HLE may be the last academic exam we need to give to models, but it is far from the last benchmark for AI.
+
+Impact.
+By providing a clear measure of AI progress, HLE creates a common reference point for scientists and policymakers to assess AI capabilities. This enables more informed discussions about development trajectories, potential risks, and necessary governance measures.
+
+References
+Alberti et al. [2019]
+C. Alberti, K. Lee, and M. Collins.A bert baseline for the natural questions, 2019.URL https://arxiv.org/abs/1901.08634.
+Andriushchenko et al. [2024]
+M. Andriushchenko, A. Souly, M. Dziemian, D. Duenas, M. Lin, J. Wang, D. Hendrycks, A. Zou, Z. Kolter, M. Fredrikson, E. Winsor, J. Wynne, Y. Gal, and X. Davies.Agentharm: A benchmark for measuring harmfulness of llm agents, 2024.URL https://arxiv.org/abs/2410.09024.
+Anthropic [2024a]
+Anthropic.The claude 3 model family: Opus, sonnet, haiku, 2024a.URL https://api.semanticscholar.org/CorpusID:268232499.
+Anthropic [2024b]
+Anthropic.Model card addendum: Claude 3.5 haiku and upgraded claude 3.5 sonnet, 2024b.URL https://assets.anthropic.com/m/1cd9d098ac3e6467/original/Claude-3-Model-Card-October-Addendum.pdf.
+Anthropic [2024c]
+Anthropic.Responsible scaling policy updates, 2024c.URL https://www.anthropic.com/rsp-updates.
+Austin et al. [2021]
+J. Austin, A. Odena, M. Nye, M. Bosma, H. Michalewski, D. Dohan, E. Jiang, C. Cai, M. Terry, Q. Le, and C. Sutton.Program synthesis with large language models, 2021.URL https://arxiv.org/abs/2108.07732.
+Bai et al. [2022]
+Y. Bai, A. Jones, K. Ndousse, A. Askell, A. Chen, N. DasSarma, D. Drain, S. Fort, D. Ganguli, T. Henighan, N. Joseph, S. Kadavath, J. Kernion, T. Conerly, S. El-Showk, N. Elhage, Z. Hatfield-Dodds, D. Hernandez, T. Hume, S. Johnston, S. Kravec, L. Lovitt, N. Nanda, C. Olsson, D. Amodei, T. Brown, J. Clark, S. McCandlish, C. Olah, B. Mann, and J. Kaplan.Training a helpful and harmless assistant with reinforcement learning from human feedback, 2022.URL https://arxiv.org/abs/2204.05862.
+Bajaj et al. [2018]
+P. Bajaj, D. Campos, N. Craswell, L. Deng, J. Gao, X. Liu, R. Majumder, A. McNamara, B. Mitra, T. Nguyen, M. Rosenberg, X. Song, A. Stoica, S. Tiwary, and T. Wang.Ms marco: A human generated machine reading comprehension dataset, 2018.URL https://arxiv.org/abs/1611.09268.
+Bhatt et al. [2023]
+M. Bhatt, S. Chennabasappa, C. Nikolaidis, S. Wan, I. Evtimov, D. Gabi, D. Song, F. Ahmad, C. Aschermann, L. Fontana, S. Frolov, R. P. Giri, D. Kapil, Y. Kozyrakis, D. LeBlanc, J. Milazzo, A. Straumann, G. Synnaeve, V. Vontimitta, S. Whitman, and J. Saxe.Purple llama cyberseceval: A secure coding benchmark for language models, 2023.URL https://arxiv.org/abs/2312.04724.
+Chan et al. [2024]
+J. S. Chan, N. Chowdhury, O. Jaffe, J. Aung, D. Sherburn, E. Mays, G. Starace, K. Liu, L. Maksin, T. Patwardhan, L. Weng, and A. Mądry.Mle-bench: Evaluating machine learning agents on machine learning engineering, 2024.URL https://arxiv.org/abs/2410.07095.
+Chen et al. [2021]
+M. Chen, J. Tworek, H. Jun, Q. Yuan, H. P. de Oliveira Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, A. Ray, R. Puri, G. Krueger, M. Petrov, H. Khlaaf, G. Sastry, P. Mishkin, B. Chan, S. Gray, N. Ryder, M. Pavlov, A. Power, L. Kaiser, M. Bavarian, C. Winter, P. Tillet, F. P. Such, D. Cummings, M. Plappert, F. Chantzis, E. Barnes, A. Herbert-Voss, W. H. Guss, A. Nichol, A. Paino, N. Tezak, J. Tang, I. Babuschkin, S. Balaji, S. Jain, W. Saunders, C. Hesse, A. N. Carr, J. Leike, J. Achiam, V. Misra, E. Morikawa, A. Radford, M. Knight, M. Brundage, M. Murati, K. Mayer, P. Welinder, B. McGrew, D. Amodei, S. McCandlish, I. Sutskever, and W. Zaremba.Evaluating large language models trained on code, 2021.URL https://arxiv.org/abs/2107.03374.
+Chollet et al. [2024]
+F. Chollet, M. Knoop, G. Kamradt, and B. Landers.Arc prize 2024: Technical report, 2024.URL https://arxiv.org/abs/2412.04604.
+Cobbe et al. [2021]
+K. Cobbe, V. Kosaraju, M. Bavarian, M. Chen, H. Jun, L. Kaiser, M. Plappert, J. Tworek, J. Hilton, R. Nakano, C. Hesse, and J. Schulman.Training verifiers to solve math word problems, 2021.URL https://arxiv.org/abs/2110.14168.
+DeepSeek-AI [2024]
+DeepSeek-AI.Deepseek-v3 technical report, 2024.URL https://github.com/deepseek-ai/DeepSeek-V3/blob/main/DeepSeek_V3.pdf.
+Dua et al. [2019]
+D. Dua, Y. Wang, P. Dasigi, G. Stanovsky, S. Singh, and M. Gardner.Drop: A reading comprehension benchmark requiring discrete reasoning over paragraphs, 2019.URL https://arxiv.org/abs/1903.00161.
+Dubey et al. [2024]
+A. Dubey et al.The llama 3 herd of models, 2024.URL https://arxiv.org/abs/2407.21783.
+Gao et al. [2024]
+B. Gao, F. Song, Z. Yang, Z. Cai, Y. Miao, Q. Dong, L. Li, C. Ma, L. Chen, R. Xu, Z. Tang, B. Wang, D. Zan, S. Quan, G. Zhang, L. Sha, Y. Zhang, X. Ren, T. Liu, and B. Chang.Omni-math: A universal olympiad level mathematic benchmark for large language models, 2024.URL https://arxiv.org/abs/2410.07985.
+Glazer et al. [2024]
+E. Glazer, E. Erdil, T. Besiroglu, D. Chicharro, E. Chen, A. Gunning, C. F. Olsson, J.-S. Denain, A. Ho, E. de Oliveira Santos, O. Järviniemi, M. Barnett, R. Sandler, J. Sevilla, Q. Ren, E. Pratt, L. Levine, G. Barkley, N. Stewart, B. Grechuk, T. Grechuk, and S. V. Enugandla.Frontiermath: A benchmark for evaluating advanced mathematical reasoning in ai, 2024.URL https://arxiv.org/abs/2411.04872.
+He et al. [2024]
+C. He, R. Luo, Y. Bai, S. Hu, Z. L. Thai, J. Shen, J. Hu, X. Han, Y. Huang, Y. Zhang, J. Liu, L. Qi, Z. Liu, and M. Sun.Olympiadbench: A challenging benchmark for promoting agi with olympiad-level bilingual multimodal scientific problems, 2024.URL https://arxiv.org/abs/2402.14008.
+Hendrycks et al. [2021a]
+D. Hendrycks, S. Basart, S. Kadavath, M. Mazeika, A. Arora, E. Guo, C. Burns, S. Puranik, H. He, D. Song, and J. Steinhardt.Measuring coding challenge competence with apps, 2021a.URL https://arxiv.org/abs/2105.09938.
+Hendrycks et al. [2021b]
+D. Hendrycks, C. Burns, S. Basart, A. Zou, M. Mazeika, D. Song, and J. Steinhardt.Measuring massive multitask language understanding, 2021b.URL https://arxiv.org/abs/2009.03300.
+Hendrycks et al. [2021c]
+D. Hendrycks, C. Burns, S. Kadavath, A. Arora, S. Basart, E. Tang, D. Song, and J. Steinhardt.Measuring mathematical problem solving with the math dataset, 2021c.URL https://arxiv.org/abs/2103.03874.
+Hendrycks et al. [2022]
+D. Hendrycks, A. Zou, M. Mazeika, L. Tang, B. Li, D. Song, and J. Steinhardt.Pixmix: Dreamlike pictures comprehensively improve safety measures, 2022.URL https://arxiv.org/abs/2112.05135.
+Hosseini et al. [2024]
+A. Hosseini, A. Sordoni, D. Toyama, A. Courville, and R. Agarwal.Not all llm reasoners are created equal, 2024.URL https://arxiv.org/abs/2410.01748.
+Jacovi et al. [2024]
+A. Jacovi, A. Wang, C. Alberti, C. Tao, J. Lipovetz, K. Olszewska, L. Haas, M. Liu, N. Keating, A. Bloniarz, C. Saroufim, C. Fry, D. Marcus, D. Kukliansky, G. S. Tomar, J. Swirhun, J. Xing, L. W. andMadhu Gurumurthy, M. Aaron, M. Ambar, R. Fellinger, R. Wang, R. Sims, Z. Zhang, S. Goldshtein, and D. Das.Facts leaderboard.https://kaggle.com/facts-leaderboard, 2024.Google DeepMind, Google Research, Google Cloud, Kaggle.
+Jimenez et al. [2024]
+C. E. Jimenez, J. Yang, A. Wettig, S. Yao, K. Pei, O. Press, and K. Narasimhan.Swe-bench: Can language models resolve real-world github issues?, 2024.URL https://arxiv.org/abs/2310.06770.
+Kiela et al. [2021]
+D. Kiela, M. Bartolo, Y. Nie, D. Kaushik, A. Geiger, Z. Wu, B. Vidgen, G. Prasad, A. Singh, P. Ringshia, Z. Ma, T. Thrush, S. Riedel, Z. Waseem, P. Stenetorp, R. Jia, M. Bansal, C. Potts, and A. Williams.Dynabench: Rethinking benchmarking in nlp, 2021.URL https://arxiv.org/abs/2104.14337.
+Kumar et al. [2024]
+P. Kumar, E. Lau, S. Vijayakumar, T. Trinh, S. R. Team, E. Chang, V. Robinson, S. Hendryx, S. Zhou, M. Fredrikson, S. Yue, and Z. Wang.Refusal-trained llms are easily jailbroken as browser agents, 2024.URL https://arxiv.org/abs/2410.13886.
+Laurent et al. [2024]
+J. M. Laurent, J. D. Janizek, M. Ruzo, M. M. Hinks, M. J. Hammerling, S. Narayanan, M. Ponnapati, A. D. White, and S. G. Rodriques.Lab-bench: Measuring capabilities of language models for biology research, 2024.URL https://arxiv.org/abs/2407.10362.
+Li et al. [2024]
+N. Li, A. Pan, A. Gopal, S. Yue, D. Berrios, A. Gatti, J. D. Li, A.-K. Dombrowski, S. Goel, L. Phan, G. Mukobi, N. Helm-Burger, R. Lababidi, L. Justen, A. B. Liu, M. Chen, I. Barrass, O. Zhang, X. Zhu, R. Tamirisa, B. Bharathi, A. Khoja, Z. Zhao, A. Herbert-Voss, C. B. Breuer, S. Marks, O. Patel, A. Zou, M. Mazeika, Z. Wang, P. Oswal, W. Lin, A. A. Hunt, J. Tienken-Harder, K. Y. Shih, K. Talley, J. Guan, R. Kaplan, I. Steneker, D. Campbell, B. Jokubaitis, A. Levinson, J. Wang, W. Qian, K. K. Karmakar, S. Basart, S. Fitz, M. Levine, P. Kumaraguru, U. Tupakula, V. Varadharajan, R. Wang, Y. Shoshitaishvili, J. Ba, K. M. Esvelt, A. Wang, and D. Hendrycks.The wmdp benchmark: Measuring and reducing malicious use with unlearning, 2024.URL https://arxiv.org/abs/2403.03218.
+Lu et al. [2024]
+P. Lu, H. Bansal, T. Xia, J. Liu, C. Li, H. Hajishirzi, H. Cheng, K.-W. Chang, M. Galley, and J. Gao.Mathvista: Evaluating mathematical reasoning of foundation models in visual contexts, 2024.URL https://arxiv.org/abs/2310.02255.
+McIntosh et al. [2024]
+T. R. McIntosh, T. Susnjak, N. Arachchilage, T. Liu, P. Watters, and M. N. Halgamuge.Inadequacies of large language model benchmarks in the era of generative artificial intelligence, 2024.URL https://arxiv.org/abs/2402.09880.
+Nie et al. [2020]
+Y. Nie, A. Williams, E. Dinan, M. Bansal, J. Weston, and D. Kiela.Adversarial nli: A new benchmark for natural language understanding, 2020.URL https://arxiv.org/abs/1910.14599.
+OpenAI [2024a]
+OpenAI.Openai o1 system card, 2024a.URL https://cdn.openai.com/o1-system-card-20240917.pdf.
+OpenAI [2024b]
+OpenAI.Openai and los alamos national laboratory announce bioscience research partnership, 2024b.URL https://openai.com/index/openai-and-los-alamos-national-laboratory-work-together/.
+OpenAI [2024c]
+OpenAI.Introducing swe-bench verified, 2024c.URL https://openai.com/index/introducing-swe-bench-verified/.
+OpenAI et al. [2024]
+OpenAI et al.Gpt-4 technical report, 2024.URL https://arxiv.org/abs/2303.08774.
+Ott et al. [2022]
+S. Ott, A. Barbosa-Silva, K. Blagec, J. Brauner, and M. Samwald.Mapping global dynamics of benchmark creation and saturation in artificial intelligence.Nature Communications, 13(1):6793, 2022.
+Owen [2024]
+D. Owen.How predictable is language model benchmark performance?, 2024.URL https://arxiv.org/abs/2401.04757.
+Perez et al. [2022]
+E. Perez, S. Ringer, K. Lukošiūtė, K. Nguyen, E. Chen, S. Heiner, C. Pettit, C. Olsson, S. Kundu, S. Kadavath, A. Jones, A. Chen, B. Mann, B. Israel, B. Seethor, C. McKinnon, C. Olah, D. Yan, D. Amodei, D. Amodei, D. Drain, D. Li, E. Tran-Johnson, G. Khundadze, J. Kernion, J. Landis, J. Kerr, J. Mueller, J. Hyun, J. Landau, K. Ndousse, L. Goldberg, L. Lovitt, M. Lucas, M. Sellitto, M. Zhang, N. Kingsland, N. Elhage, N. Joseph, N. Mercado, N. DasSarma, O. Rausch, R. Larson, S. McCandlish, S. Johnston, S. Kravec, S. El Showk, T. Lanham, T. Telleen-Lawton, T. Brown, T. Henighan, T. Hume, Y. Bai, Z. Hatfield-Dodds, J. Clark, S. R. Bowman, A. Askell, R. Grosse, D. Hernandez, D. Ganguli, E. Hubinger, N. Schiefer, and J. Kaplan.Discovering language model behaviors with model-written evaluations, 2022.URL https://arxiv.org/abs/2212.09251.
+Phuong et al. [2024]
+M. Phuong, M. Aitchison, E. Catt, S. Cogan, A. Kaskasoli, V. Krakovna, D. Lindner, M. Rahtz, Y. Assael, S. Hodkinson, H. Howard, T. Lieberum, R. Kumar, M. A. Raad, A. Webson, L. Ho, S. Lin, S. Farquhar, M. Hutter, G. Deletang, A. Ruoss, S. El-Sayed, S. Brown, A. Dragan, R. Shah, A. Dafoe, and T. Shevlane.Evaluating frontier models for dangerous capabilities, 2024.URL https://arxiv.org/abs/2403.13793.
+Rajpurkar et al. [2016]
+P. Rajpurkar, J. Zhang, K. Lopyrev, and P. Liang.Squad: 100,000+ questions for machine comprehension of text, 2016.URL https://arxiv.org/abs/1606.05250.
+Rajpurkar et al. [2018]
+P. Rajpurkar, R. Jia, and P. Liang.Know what you don’t know: Unanswerable questions for squad, 2018.URL https://arxiv.org/abs/1806.03822.
+Rein et al. [2023]
+D. Rein, B. L. Hou, A. C. Stickland, J. Petty, R. Y. Pang, J. Dirani, J. Michael, and S. R. Bowman.Gpqa: A graduate-level google-proof q&a benchmark, 2023.URL https://arxiv.org/abs/2311.12022.
+Singhal et al. [2023]
+K. Singhal, S. Azizi, T. Tu, S. S. Mahdavi, J. Wei, H. W. Chung, N. Scales, A. Tanwani, H. Cole-Lewis, S. Pfohl, et al.Large language models encode clinical knowledge.Nature, 620(7972):172–180, 2023.
+Srinivasan et al. [2023]
+V. K. Srinivasan, Z. Dong, B. Zhu, B. Yu, H. Mao, D. Mosk-Aoyama, K. Keutzer, J. Jiao, and J. Zhang.Nexusraven: A commercially-permissive language model for function calling.In NeurIPS 2023 Foundation Models for Decision Making Workshop, 2023.URL https://openreview.net/forum?id=5lcPe6DqfI.
+Srivastava et al. [2023]
+A. Srivastava, A. Rastogi, A. Rao, A. A. M. Shoeb, A. Abid, A. Fisch, A. R. Brown, A. Santoro, A. Gupta, A. Garriga-Alonso, A. Kluska, A. Lewkowycz, A. Agarwal, A. Power, A. Ray, A. Warstadt, A. W. Kocurek, A. Safaya, A. Tazarv, A. Xiang, A. Parrish, A. Nie, A. Hussain, A. Askell, A. Dsouza, A. Slone, A. Rahane, A. S. Iyer, A. Andreassen, A. Madotto, A. Santilli, A. Stuhlmüller, A. Dai, A. La, A. Lampinen, A. Zou, et al.Beyond the imitation game: Quantifying and extrapolating the capabilities of language models, 2023.URL https://arxiv.org/abs/2206.04615.
+Taghanaki et al. [2024]
+S. A. Taghanaki, A. Khani, and A. Khasahmadi.Mmlu-pro+: Evaluating higher-order reasoning and shortcut learning in llms, 2024.URL https://arxiv.org/abs/2409.02257.
+Team et al. [2024]
+G. Team et al.Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context, 2024.URL https://arxiv.org/abs/2403.05530.
+Tsoukalas et al. [2024]
+G. Tsoukalas, J. Lee, J. Jennings, J. Xin, M. Ding, M. Jennings, A. Thakur, and S. Chaudhuri.Putnambench: Evaluating neural theorem-provers on the putnam mathematical competition, 2024.URL https://arxiv.org/abs/2407.11214.
+Wang et al. [2019]
+A. Wang, A. Singh, J. Michael, F. Hill, O. Levy, and S. R. Bowman.Glue: A multi-task benchmark and analysis platform for natural language understanding, 2019.URL https://arxiv.org/abs/1804.07461.
+Wang et al. [2020]
+A. Wang, Y. Pruksachatkun, N. Nangia, A. Singh, J. Michael, F. Hill, O. Levy, and S. R. Bowman.Superglue: A stickier benchmark for general-purpose language understanding systems, 2020.URL https://arxiv.org/abs/1905.00537.
+Wang et al. [2024]
+Y. Wang, X. Ma, G. Zhang, Y. Ni, A. Chandra, S. Guo, W. Ren, A. Arulraj, X. He, Z. Jiang, T. Li, M. Ku, K. Wang, A. Zhuang, R. Fan, X. Yue, and W. Chen.Mmlu-pro: A more robust and challenging multi-task language understanding benchmark (published at neurips 2024 track datasets and benchmarks), 2024.URL https://arxiv.org/abs/2406.01574.
+Wei et al. [2024]
+J. Wei, N. Karina, H. W. Chung, Y. J. Jiao, S. Papay, A. Glaese, J. Schulman, and W. Fedus.Measuring short-form factuality in large language models, 2024.URL https://arxiv.org/abs/2411.04368.
+Wijk et al. [2024]
+H. Wijk, T. Lin, J. Becker, S. Jawhar, N. Parikh, T. Broadley, L. Chan, M. Chen, J. Clymer, J. Dhyani, E. Ericheva, K. Garcia, B. Goodrich, N. Jurkovic, M. Kinniment, A. Lajko, S. Nix, L. Sato, W. Saunders, M. Taran, B. West, and E. Barnes.Re-bench: Evaluating frontier ai r&d capabilities of language model agents against human experts, 2024.URL https://arxiv.org/abs/2411.15114.
+xAI [2024]
+xAI.Grok-2 beta release, 2024.URL https://x.ai/blog/grok-2.
+Yan et al. [2024]
+F. Yan, H. Mao, C. C.-J. Ji, T. Zhang, S. G. Patil, I. Stoica, and J. E. Gonzalez.Berkeley function calling leaderboard.https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html, 2024.
+Yang et al. [2018]
+Z. Yang, P. Qi, S. Zhang, Y. Bengio, W. W. Cohen, R. Salakhutdinov, and C. D. Manning.Hotpotqa: A dataset for diverse, explainable multi-hop question answering, 2018.URL https://arxiv.org/abs/1809.09600.
+Yao et al. [2024]
+S. Yao, N. Shinn, P. Razavi, and K. Narasimhan.
+τ
+-bench: A benchmark for tool-agent-user interaction in real-world domains, 2024.URL https://arxiv.org/abs/2406.12045.
+Zhang et al. [2024]
+A. K. Zhang, N. Perry, R. Dulepet, J. Ji, J. W. Lin, E. Jones, C. Menders, G. Hussein, S. Liu, D. Jasper, P. Peetathawatchai, A. Glenn, V. Sivashankar, D. Zamoshchin, L. Glikbarg, D. Askaryar, M. Yang, T. Zhang, R. Alluri, N. Tran, R. Sangpisit, P. Yiorkadjis, K. Osele, G. Raghupathi, D. Boneh, D. E. Ho, and P. Liang.Cybench: A framework for evaluating cybersecurity capabilities and risks of language models, 2024.URL https://arxiv.org/abs/2408.08926.
+Zhong et al. [2023]
+W. Zhong, R. Cui, Y. Guo, Y. Liang, S. Lu, Y. Wang, A. Saied, W. Chen, and N. Duan.Agieval: A human-centric benchmark for evaluating foundation models, 2023.URL https://arxiv.org/abs/2304.06364.
+Appendix AAuthors
+We offered optional co-authorship to all question submitters with an accepted question in Humanity’s Last Exam (including both public and private splits). All potential co-authors with an accepted question were contacted directly. Authorship order is ranked based on the number of accepted questions in Humanity’s Last Exam.
+
+As we give co-authors the time and freedom to choose between opting-in or staying anonymous, we will periodically update this list. We further note that this list only represents a subset of our participating institutions and authors, many chose to remain anonymous.
+
+A.1Data Contributors & Affiliations
+In progress. Sorted in descending order by number of accepted questions.
+
+Authors Tung Nguyen82, Daron Anderson, Imad Ali Shah42, Mikhail Doroshenko, Alun Cennyth Stokes83, Mobeen Mahmood26, Jaeho Lee27, Oleksandr Pokutnyi84,85, Oleg Iskra11, Jessica P. Wang86, Robert Gerbicz87, John-Clark Levin5, Serguei Popov88, Fiona Feng89, Steven Y. Feng6, Haoran Zhao15, Michael Yu, Varun Gangal, Chelsea Zou6, Zihan Wang28, Mstyslav Kazakov90, Geoff Galgon91, Johannes Schmitt9, Alvaro Sanchez, Yongki Lee92, Will Yeadon43, Scott Sauers93, Marc Roth44, Chidozie Agu94, Søren Riis44, Fabian Giska, Saiteja Utpala45, Antrell Cheatom95, Zachary Giboney96, Gashaw M. Goshu, Sarah-Jane Crowson97, Mohinder Maheshbhai Naiya98, Noah Burns6, Lennart Finke9, Zerui Cheng14, Hyunwoo Park11, Francesco Fournier-Facio5, Jennifer Zampese99, John Wydallis, John B. Wydallis, Ryan G. Hoerr100, Mark Nandor, Tim Gehrunger9, Jiaqi Cai4, Ben McCarty101, Jungbae Nam102, Edwin Taylor, Jun Jin, Gautier Abou Loume103,104, Hangrui Cao11, Alexis C Garretson105,106, Damien Sileo46, Qiuyu Ren3, Doru Cojoc16, Pavel Arkhipov107, Usman Qazi21,108, Aras Bacho29, Lianghui Li10, Sumeet Motwani8, Christian Schroeder de Witt8, Alexei Kopylov, Johannes Veith30,109, Eric Singer110, Paolo Rissone22, Jaehyeok Jin16, Jack Wei Lun Shi111, Chris G. Willcocks43, Ameya Prabhu23, Longke Tang14, Kevin Zhou3, Emily de Oliveira Santos31, Andrey Pupasov Maksimov112, Edward Vendrow4, Kengo Zenitani, Joshua Robinson47, Aleksandar Mikov10, Julien Guillod48,113, Yuqi Li114, Ben Pageler, Joshua Vendrow4, Vladyslav Kuchkin115, Pierre Marion10, Denis Efremov116, Jayson Lynch4, Kaiqu Liang14, Andrew Gritsevskiy117, Dakotah Martinez, Nick Crispino12, Dimitri Zvonkine49,50, Natanael Wildner Fraga, Saeed Soori17, Ori Press23, Henry Tang8, Julian Salazar32, Sean R. Green, Lina Brüssel5, Moon Twayana51, Aymeric Dieuleveut118, T. Ryan Rogers119, Wenjin Zhang12, Ross Finocchio, Bikun Li13, Jinzhou Yang120, Arun Rao33, Gabriel Loiseau46, Mikhail Kalinin121, Marco Lukas52, Ciprian Manolescu6, Nate Stambaugh122, Subrata Mishra123, Ariel Ghislain Kemogne Kamdoum53, Tad Hogg124, Alvin Jin4, Carlo Bosio3, Gongbo Sun34, Brian P Coppola54, Haline Heidinger125,126, Rafael Sayous50, Stefan Ivanov5, Joseph M Cavanagh3, Jiawei Shen12, Joseph Marvin Imperial127,128, Philippe Schwaller10, Shaipranesh Senthilkuma10, Andres M Bran10, Andres Algaba18, Brecht Verbeken18, Kelsey Van den Houte18,129, Lynn Van Der Sypt18,129, David Noever130, Lisa Schut8, Ilia Sucholutsky35, Evgenii Zheltonozhskii131, Qiaochu Yuan, Derek Lim4, Richard Stanley4,132, Shankar Sivarajan55, Tong Yang11, John Maar56, Julian Wykowski5, Martí Oller5, Jennifer Sandlin24, Anmol Sahu, Cesare Giulio Ardito133, Yuzheng Hu25, Felipe Meneguitti Dias31, Tobias Kreiman3, Kaivalya Rawal8, Tobias Garcia Vilchis134, Yuexuan Zu4, Martin Lackner57, James Koppel, Jeremy Nguyen135, Daniil S. Antonenko58, Steffi Chern11, Bingchen Zhao36, Pierrot Arsene59, Sergey Ivanov, Rafał Poświata136, Chenguang Wang12, Daofeng Li12, Donato Crisostomi22, Ali Dehghan, Andrea Achilleos137, John Arnold Ambay138, Benjamin Myklebust139, Archan Sen3, David Perrella140, Nurdin Kaparov141, Mark H Inlow142, Allen Zang13, Kalyan Ramakrishnan8, Daniil Orel60, Vladislav Poritski, Shalev Ben-David61, Zachary Berger4, Parker Whitfill4, Michael Foster, Daniel Munro28, Linh Ho, Dan Bar Hava143, Aleksey Kuchkin, Robert Lauff56, David Holmes144, Frank Sommerhage145, Anji Zhang4, Richard Moat146, Keith Schneider, Daniel Pyda147, Zakayo Kazibwe148, Mukhwinder Singh149, Don Clarke150, Dae Hyun Kim151, Sara Fish7, Veit Elser62, Victor Efren Guadarrama Vilchis152, Immo Klose16, Christoph Demian30, Ujjwala Anantheswaran24, Adam Zweiger4, Guglielmo Albani153, Jeffery Li4, Nicolas Daans154, Maksim Radionov155, Václav Rozhoň63, Vincent Ginis7,18, Ziqiao Ma54, Christian Stump156, Jacob Platnick19, Volodymyr Nevirkovets64, Luke Basler157, Marco Piccardo158, Niv Cohen35, Virendra Singh159, Josef Tkadlec37, Paul Rosu65, Alan Goldfarb3, Piotr Padlewski, Stanislaw Barzowski, Kyle Montgomery12, Aline Menezes, Arkil Patel26,160, Zixuan Wang14, Jamie Tucker-Foltz7, Jack Stade161, Declan Grabb6, Tom Goertzen66, Fereshteh Kazemi, Jeremiah Milbauer11, Abhishek Shukla67, Hossam Elgnainy162, Yan Carlos Leyva Labrador163, Hao He68, Ling Zhang68, Alan Givré164, Hew Wolff, Gözdenur Demir, Muhammad Fayez Aziz25, Younesse Kaddar8, Ivar Ängquist38, Yanxu Chen39, Elliott Thornley165, Robin Zhang4, Jiayi Pan3, Antonio Terpin9, Niklas Muennighoff6, Hailey Schoelkopf, Eric Zheng11, Avishy Carmi166, Jainam Shah167, Ethan D. L. Brown168, Kelin Zhu55, Max Bartolo169, Richard Wheeler36, Andrew Ho170, Shaul Barkan69, Jiaqi Wang15, Martin Stehberger, Egor Kretov171, Peter Bradshaw25, JP Heimonen172, Kaustubh Sridhar40, Zaki Hossain173, Ido Akov174, Yury Makarychev175, Joanna Tam70, Hieu Hoang176, David M. Cunningham177, Vladimir Goryachev, Demosthenes Patramanis8, Michael Krause178, Andrew Redenti16, David Aldous3, Jesyin Lai179, Shannon Coleman21, Jiangnan Xu180, Sangwon Lee, Ilias Magoulas181, Sandy Zhao, Ning Tang3, Michael K. Cohen3, Micah Carroll3, Orr Paradise3, Jan Hendrik Kirchner71, Stefan Steinerberger15, Maksym Ovchynnikov182, Jason O. Matos70, Adithya Shenoy, Michael Wang3, Yuzhou Nie41, Paolo Giordano72, Philipp Petersen72, Anna Sztyber-Betley183, Paolo Faraboschi184, Robin Riblet59, Jonathan Crozier73, Shiv Halasyamani185, Antonella Pinto74, Shreyas Verma186, Prashant Joshi187, Eli Meril188, Zheng-Xin Yong27, Allison Tee6, Jérémy Andréoletti48, Orion Weller75, Raghav Singhal60, Gang Zhang, Alexander Ivanov189, Seri Khoury63, Nils Gustafsson38, Hamid Mostaghimi53, Kunvar Thaman190, Qijia Chen7, Tran Quoc Khánh191, Jacob Loader5, Stefano Cavalleri192, Hannah Szlyk12, Zachary Brown4, Himanshu Narayan, Jonathan Roberts5, William Alley, Kunyang Sun3, Ryan Stendall193, Max Lamparth6, Anka Reuel6, Ting Wang12, Hanmeng Xu58, Pablo Hernández-Cámara194, Freddie Martin, Thomas Preu195, Tomek Korbak196, Marcus Abramovitch, Dominic Williamson66, Ida Bosio197, Ziye Chen20, Biró Bálint, Eve J. Y. Lo198, Maria Inês S. Nunes199, Yibo Jiang13, M Saiful Bari200, Peyman Kassani201, Zihao Wang13, Behzad Ansarinejad, Yewen Sun202, Stephane Durand203, Guillaume Douville, Daniel Tordera204, George Balabanian40, Earth Anderson205, Lynna Kvistad206, Alejandro José Moyano207, Hsiaoyun Milliron208, Ahmad Sakor52, Murat Eron209, Isaac C. McAlister, Andrew Favre D.O.210, Shailesh Shah211, Xiaoxiang Zhou30, Firuz Kamalov212, Ronald Clark8, Sherwin Abdoli74, Tim Santens5, Harrison K Wang7, Evan Chen4, Alessandro Tomasiello213, G. Bruno De Luca6, Shi-Zhuo Looi29, Vinh-Kha Le3, Noam Kolt69, Niels Mündler9, Avi Semler8, Emma Rodman214, Jacob Drori, Carl J Fossum215, Luk Gloor, Milind Jagota3, Ronak Pradeep61, Honglu Fan216, Tej Shah217, Jonathan Eicher218, Michael Chen29, Kushal Thaman6, William Merrill35, Moritz Firsching219, Carter Harris220, \textcommabelowStefan Ciobâcă221, Jason Gross, Rohan Pandey, Ilya Gusev, Adam Jones, Shashank Agnihotri76, Pavel Zhelnov17, Siranut Usawasutsakorn222, Mohammadreza Mofayezi17, Alexander Piperski223, Marc Carauleanu224, David K. Zhang6, Kostiantyn Dobarskyi, Dylan Ler, Roman Leventov225, Ignat Soroko51, Thorben Jansen226, Scott Creighton, Pascal Lauer227,228, Joshua Duersch229, Vage Taamazyan230, Dario Bezzi231, Wiktor Morak, Wenjie Ma3, William Held6,19, Tran Đuc Huy232, Ruicheng Xian25, Armel Randy Zebaze233, Mohanad Mohamed234, Julian Noah Leser57, Michelle X Yuan, Laila Yacar235, Johannes Lengler9, Katarzyna Olszewska, Hossein Shahrtash236, Edson Oliveira237, Joseph W. Jackson238, Daniel Espinosa Gonzalez41, Andy Zou11,239, Muthu Chidambaram65, Timothy Manik, Hector Haffenden, Dashiell Stander240, Ali Dasouqi75, Alexander Shen241, Emilien Duc9, Bita Golshani, David Stap39, Mikalai Uzhou242, Alina Borisovna Zhidkovskaya243, Lukas Lewark9, Miguel Orbegozo Rodriguez244, Mátyás Vincze245,246, Dustin Wehr, Colin Tang11, Shaun Phillips, Fortuna Samuele247, Jiang Muzhen, Fredrik Ekström, Angela Hammon, Oam Patel7, Faraz Farhidi248, George Medley, Forough Mohammadzadeh, Madellene Peñaflor249, Haile Kassahun26, Alena Friedrich250, Claire Sparrow13, Rayner Hernandez Perez251, Taom Sakal41, Omkar Dhamane252, Ali Khajegili Mirabadi21, Eric Hallman, Kenchi Okutsu253, Mike Battaglia, Mohammad Maghsoudimehrabani254, Alon Amit255, Dave Hulbert, Roberto Pereira256, Simon Weber9, Handoko, Anton Peristyy, Stephen Malina257, Samuel Albanie, Will Cai3, Mustafa Mehkary17,77, Rami Aly5, Frank Reidegeld, Anna-Katharina Dick23, Cary Friday258, Jasdeep Sidhu, Hassan Shapourian259, Wanyoung Kim260, Mariana Costa, Hubeyb Gurdogan33, Brian Weber261, Harsh Kumar262, Tong Jiang7, Arunim Agarwal263, Chiara Ceconello, Warren S. Vaz, Chao Zhuang, Haon Park264,265, Andrew R. Tawfeek15, Daattavya Aggarwal5, Michael Kirchhof23, Linjie Dai4, Evan Kim4, Johan Ferret32, Yuzhou Wang19, Minghao Yan34, Krzysztof Burdzy15, Lixin Zhang, Antonio Franca5, Diana T. Pham266, Kang Yong Loh6, Joshua Robinson267, Abram Jackson, Shreen Gul268, Gunjan Chhablani19, Zhehang Du40, Adrian Cosma269, Jesus Colino, Colin White270, Jacob Votava14, Vladimir Vinnikov, Ethan Delaney42, Petr Spelda37, Vit Stritecky37, Syed M. Shahid271, Jean-Christophe Mourrat49,272, Lavr Vetoshkin273, Koen Sponselee274, Renas Bacho275, Florencia de la Rosa276, Xiuyu Li3, Guillaume Malod277, Leon Lang39, Julien Laurendeau10, Dmitry Kazakov7, Fatimah Adesanya, Julien Portier5, Lawrence Hollom5, Victor Souza5, Yuchen Anna Zhou279, Julien Degorre280, Yiğit Yalın281, Gbenga Daniel Obikoya, Luca Arnaboldi10, Rai (Michael Pokorny)78, Filippo Bigi10, M.C. Boscá282, Oleg Shumar, Kaniuar Bacho36, Pierre Clavier283, Gabriel Recchia284, Mara Popescu79, Nikita Shulga285, Ngefor Mildred Tanwie286, Denis Peskoff14, Thomas C.H. Lux287, Ben Rank, Colin Ni33, Matthew Brooks, Alesia Yakimchyk288, Huanxu (Quinn) Liu289, Olle Häggström290, Emil Verkama38, Hans Gundlach4, Leonor Brito-Santana291, Brian Amaro6, Vivek Vajipey6, Rynaa Grover19, Yiyang Fan, Gabriel Poesia Reis e Silva6, Linwei Xin13, Yosi Kratish64, Jakub Łucki9, Wen-Ding Li62, Sivakanth Gopi45, Andrea Caciolai22, Justin Xu8, Kevin Joseph Scaria24, Freddie Vargus292, Farzad Habibi293, Long (Tony) Lian3, Emanuele Rodolà22, Jules Robins, Vincent Cheng28, Tony Fruhauff, Brad Raynor294, Hao Qi20, Xi Jiang13, Ben Segev16, Jingxuan Fan7, Sarah Martinson7, Erik Y. Wang7, Kaylie Hausknecht7, Michael P. Brenner7, Mao Mao20, Xinyu Zhang20, David Avagian76, Eshawn Jessica Scipio295, Alon Ragoler296, Justin Tan5, Blake Sims, Rebeka Plecnik, Aaron Kirtland27, Omer Faruk Bodur, D.P. Shinde, Zahra Adoul297, Mohamed Zekry298, Ali Karakoc299, Tania C. B. Santos, Samir Shamseldeen300, Loukmane Karim77, Anna Liakhovitskaia301, Nate Resman80, Nicholas Farina, Juan Carlos Gonzalez302, Gabe Maayan20, Sarah Hoback7, Rodrigo De Oliveira Pena303, Glen Sherman, Elizabeth Kelley80, Hodjat Mariji, Rasoul Pouriamanesh, Wentao Wu21, Sandra Mendoza304,305, Ismail Alarab306, Joshua Cole307, Danyelle Ferreira, Bryan Johnson308, Mohammad Safdari309, Liangti Dai8, Siriphan Arthornthurasuk, Alexey Pronin310, Jing Fan79, Angel Ramirez-Trinidad, Ashley Cartwright311, Daphiny Pottmaier312, Omid Taheri313, David Outevsky314, Stanley Stepanic315, Samuel Perry, Luke Askew316, Raúl Adrián Huerta Rodríguez, Ali M. R. Minissi81, Sam Ali47, Ricardo Lorena317, Krishnamurthy Iyer318, Arshad Anil Fasiludeen5, Sk Md Salauddin319, Murat Islam320, Juan Gonzalez, Josh Ducey321, Maja Somrak, Vasilios Mavroudis322, Eric Vergo, Juehang Qin323, Benjámin Borbás324, Eric Chu32, Jack Lindsey71, Anil Radhakrishnan73, Antoine Jallon, I.M.J. McInnis, Pawan Kumar325, Laxman Prasad Goswami67, Daniel Bugas, Nasser Heydari, Ferenc Jeanplong326, Archimedes Apronti327, Abdallah Galal328, Ng Ze-An329, Ankit Singh330, Joan of Arc Xavier, Kanu Priya Agarwal, Mohammed Berkani331, Benedito Alves de Oliveira Junior31, Dmitry Malishev, Nicolas Remy332, Taylor D. Hartman333, Tim Tarver334, Stephen Mensah335, Javier Gimenez, Roselynn Grace Montecillo336, Russell Campbell337, Asankhaya Sharma338, Khalida Meer, Xavier Alapont, Deepakkumar Patil339, Rajat Maheshwari340, Abdelkader Dendane, Priti Shukla341, Sergei Bogdanov342, Sören Möller343, Muhammad Rehan Siddiqi344,345, Prajvi Saxena346, Himanshu Gupta24, Innocent Enyekwe, Ragavendran P V, Zienab EL-Wasif81, Aleksandr Maksapetyan, Vivien Rossbach, Chris Harjadi6, Mohsen Bahaloohoreh, Song Bian34, John Lai, Justine Leon Uro, Greg Bateman, Mohamed Sayed, Ahmed Menshawy347, Darling Duclosel348, Yashaswini Jain349, Ashley Aaron, Murat Tiryakioglu, Sheeshram Siddh, Keith Krenek, Alex Hoover13, Joseph McGowan17, Tejal Patwardhan78
+
+Affiliations
+
+3. University of California, Berkeley
+4. Massachusetts Institute of Technology
+5. University of Cambridge
+6. Stanford University
+7. Harvard University
+8. University of Oxford
+9. ETH Zürich
+10. École Polytechnique Fédérale de Lausanne
+11. Carnegie Mellon University
+12. Washington University
+13. University of Chicago
+14. Princeton University
+15. University of Washington
+16. Columbia University
+17. University of Toronto
+18. Vrije Universiteit Brussel
+19. Georgia Institute of Technology
+20. Boston University
+21. University of British Columbia
+22. Sapienza University of Rome
+23. University of Tübingen
+24. Arizona State University
+25. University of Illinois Urbana-Champaign
+26. McGill University
+27. Brown University
+28. University of California, San Diego
+29. California Institute of Technology
+30. Humboldt-Universität zu Berlin
+31. University of Sao Paulo
+32. Google DeepMind
+33. University of California, Los Angeles
+34. University of Wisconsin-Madison
+35. New York University
+36. University of Edinburgh
+37. Charles University
+38. KTH Royal Institute of Technology
+39. University of Amsterdam
+40. University of Pennsylvania
+41. University of California, Santa Barbara
+42. University of Galway
+43. Durham University
+44. Queen Mary University of London
+45. Microsoft Research
+46. Inria
+47. University of Southern California
+48. École Normale Supérieure
+49. CNRS
+50. Université Paris-Saclay
+51. University of North Texas
+52. Leibniz University Hannover
+53. University of Calgary
+54. University of Michigan
+55. University of Maryland
+56. Technische Universität Berlin
+57. TU Wien
+58. Yale University
+59. École Normale Supérieure Paris-Saclay
+60. Mohamed bin Zayed University of Artificial Intelligence
+61. University of Waterloo
+62. Cornell University
+63. INSAIT
+64. Northwestern University
+65. Duke University
+66. The University of Sydney
+67. Indian Institute of Technology Delhi
+68. The Australian National University
+69. Hebrew University
+70. Northeastern University
+71. Anthropic
+72. University of Vienna
+73. North Carolina State University
+74. Independent researcher
+75. Johns Hopkins University
+76. University of Mannheim
+77. The Hospital for Sick Children
+78. OpenAI
+79. Heidelberg University
+80. University of Oklahoma
+81. Cairo University
+82. Texas A&M University
+83. Gift Horse Mouth Inspections
+84. Institute of Mathematics of NAS of Ukraine
+85. Kiev School of Economics
+86. RWTH Aachen University
+87. ELTE
+88. University of Porto
+89. Queen’s University
+90. Kyiv Polytechnic Institute
+91. Nimbus AI
+92. Georgia Southern University
+93. University of Minnesota Twin Cities
+94. Alberta Health Services
+95. University of Illinois
+96. ZG Law
+97. Hereford College of Arts
+98. Auckland University of Technology
+99. University of Canterbury
+100. Metropolitan State University of Denver
+101. Accenture Labs
+102. CICMA
+103. Université de Yaoundé I
+104. Ecole Nationale Supérieure Polytechnique de Yaoundé
+105. Tufts University
+106. The Jackson Laboratory
+107. Institute of Science and Technology Austria
+108. RUSM
+109. Charité – Universitätsmedizin
+110. Happy Technologies LLC
+111. National University of Singapore
+112. Universidade Federal de Juiz de Fora
+113. Sorbonne Université
+114. C. N. Yang institute for Theoretical Physics
+115. University of Luxembourg
+116. Rockwell Automation
+117. Contramont Research
+118. Institut Polytechnique de Paris
+119. TRR Designs
+120. Maastricht University
+121. Martin-Luther-University Halle-Wittenberg
+122. Diverging Mathematics
+123. Indian Institute of Technology Bombay
+124. Institute for Molecular Manufacturing
+125. St. Petersburg College
+126. La Molina National Agrarian University
+127. University of Bath
+128. National University Philippines
+129. UZ Brussel
+130. PeopleTec, Inc.
+131. Technion – Israel Institute of Technology
+132. University of Miami
+133. University of Manchester
+134. Universidad Iberoamericana
+135. Swinburne University of Technology
+136. National Information Processing Institute
+137. University College London
+138. University of Technology Sydney
+139. Ecco IT
+140. University of Western Australia
+141. Snorkel AI
+142. Indiana State University
+143. Manhattan School of Music
+144. Universiteit Leiden
+145. Synbionix
+146. The Open University
+147. Drexel University
+148. Corteva Agriscience
+149. Saint Mary’s University
+150. Sanford Burnham Preybs
+151. Yonsei University
+152. University of Leeds
+153. Politecnico di Milano
+154. KU Leuven
+155. Brandenburg University of Technology
+156. Ruhr University Bochum
+157. University of Arizona
+158. Universidade de Lisboa,
+159. Indian Institute of Technology Kharagpur
+160. Mila
+161. University of Copenhagen
+162. Cairo University Specialized Pediatric Hospital
+163. Center for Scientific Research and Higher Education at Ensenada (CICESE)
+164. University of Buenos Aires
+165. Oxford University
+166. Ben-Gurion University
+167. blurrylogic
+168. Donald and Barbara Zucker School of Medicine
+169. Cohere
+170. Ivy Natal
+171. Fraunhofer IMTE
+172. Siili Solutions Oyj
+173. Cambridge University
+174. Aalto University
+175. Toyota Technological Institute at Chicago
+176. Case Wester Reserve University
+177. EHC Investments LLC
+178. University of Windsor
+179. St. Jude Children’s Research Hospital
+180. Rochester Institute of Technology
+181. Emory University
+182. CERN
+183. Warsaw University of Technology
+184. Hewlett Packard Enterprise
+185. University of Houston
+186. Simplr AI, Asurion
+187. All India Institute of Medical Sciences
+188. Tel Aviv University
+189. Ruhr-Universität Bochum
+190. Standard Intelligence
+191. Posts and Telecommunications Institute of Technology
+192. Clearhorse Ltd
+193. Cranfield University
+194. Image Processing Lab, Universitat de Valencia
+195. Universität Zürich
+196. UK AI Safety Institute
+197. University of Padua
+198. Royal Veterinary College
+199. Instituto Superior Técnico
+200. SDAIA
+201. Children’s Hospital of Orange County
+202. The Ohio State University
+203. University of Montreal
+204. Universidad de Valencia
+205. University of Arkansas
+206. Monash University
+207. OncoPrecision
+208. Van Andel Institute
+209. IEEE Life Member
+210. Larkin Community Hospital
+211. The University of Texas at Dallas
+212. Canadian University Dubai
+213. Università di Milano-Bicocca
+214. University of Massachusetts Lowell
+215. Virginia Tech
+216. University of Geneva
+217. Rutgers University
+218. MolMind
+219. Google Research
+220. Cal Poly San Luis Obispo
+221. Alexandru Ioan Cuza University
+222. Chulalongkorn University
+223. Stockholm University
+224. AE Studio
+225. Gaia Lab
+226. Leibniz Institute for Science and Mathematics Education
+227. Australian National University
+228. Saarland University
+229. College of Eastern Idaho
+230. Intrinsic Innovation LLC
+231. University of Bologna
+232. HUTECH
+233. INRIA
+234. King Saud University
+235. Universidad de Buenos Aires
+236. Pennsylvania College of Technology
+237. CERo Therapeutics Holdings, Inc.
+238. The Univeirsty of Tennessee
+239. Gray Swan AI
+240. EleutherAI
+241. University of Montpellier
+242. HomeEquity Bank
+243. Materials Platform for Data Science LLC
+244. ETH Zurich
+245. University of Trento
+246. Fondazione Bruno Kessler
+247. University of Pisa
+248. Georgia State University
+249. Polytechnic University of the Philippines
+250. University of Oregon
+251. The University of Chicago
+252. University of Mumbai
+253. Gakushuin University
+254. University of Guelph
+255. Intuit
+256. CTTC / CERCA
+257. Dyno Therapeutics
+258. Lewis Katz School of Medicine
+259. Cisco
+260. Fyaora Labs
+261. Intelligent Geometries
+262. Indian Institute of Technology (BHU)
+263. Center for AI Safety
+264. AIM Intelligence
+265. Seoul National University
+266. The University of Texas at Arlington
+267. The Hartree Centre
+268. Missouri University of Science and Technology
+269. POLITEHNICA Bucharest National University of Science and Technology
+270. Abacus.AI
+271. Eastern Institute of Technology (EIT)
+272. ENS Lyon
+273. Czech Technical University in Prague
+274. University of Hamburg
+275. CISPA Helmholtz Center for Information Security
+276. Universidad de Morón
+277. Université Paris Cité and Sorbonne Université
+278. Sheffield Hallam University
+279. The New School
+280. Creative Choice LLC
+281. Max Planck Institute for Software Systems
+282. Universidad de Granada
+283. École Polytechnique
+284. Modulo Research
+285. La Trobe University
+286. University of Yaoundé I
+287. Lux Labs
+288. University of Innsbruck
+289. Nabu Technologies Inc
+290. Chalmers University of Technology
+291. Unidade Local de Saúde de Lisboa Ocidental
+292. Quotient AI
+293. University of California, Irvine
+294. Bison Fellers LLC
+295. The Future Paralegals of America
+296. Eastlake High School
+297. University of Bradford
+298. Beni Suef University
+299. Bogazici University
+300. Mansoura University
+301. Univerisity of Bristol
+302. Jala University
+303. Florida Atlantic University
+304. CONICET
+305. Universidad Tecnológica Nacional
+306. Bournemouth University
+307. University of Warwick
+308. University of Alabama Huntsville
+309. University of Hertfordshire
+310. Central College
+311. Sheffield Teaching Hospitals NHS Foundation Trust
+312. Nottingham Trent University
+313. Max Planck Institute for Intelligent Systems
+314. Outevsky Bespoke Dance Education
+315. University of Virginia
+316. Dartmouth College
+317. INESC Microsistemas e Nanotecnologias
+318. University of Minnesota
+319. Aligarh Muslim University
+320. John Crane UK Ltd
+321. James Madison University
+322. Alan Turing Institute
+323. Rice University
+324. HUN-REN
+325. Pondicherry Engineering College
+326. Mānuka Honey and Beekeeping Consultancy Ltd
+327. Royal Holloway, University of London
+328. Tanta University
+329. University of Malaya
+330. Hemwati Nandan Bahuguna Garhwal University
+331. University Mohammed I
+332. LGM
+333. Northern Illinois University
+334. Bethune-Cookman University
+335. National University
+336. Central Mindanao University
+337. University of the Fraser Valley
+338. Patched Codes, Inc
+339. CSMSS Chh. Shahu College of Engineering
+340. Genomia Diagnostics Research Pvt Ltd
+341. EF Polymers Pvt Ltd
+342. Ecole polytechnique
+343. Forschungszentrum Jülich
+344. RMIT University
+345. Universal Higher Education
+346. German Research Center for Artificial Intelligence
+347. Menoufia University
+348. Instituto Politécnico Nacional
+349. Manipal University Jaipur
+Appendix BDataset
+B.1Submission Process
+To ensure question difficulty, we automatically check the accuracy of frontier LLMs on each question prior to submission. Our testing process uses multi-modal LLMs for text-and-image questions (GPT-4o, Gemini 1.5 Pro, Claude 3.5 Sonnet, o1) and adds two non-multi-modal models (o1-mini, o1-preview) for text-only questions. We use different submission criteria by question type: exact-match questions must stump all models, while multiple-choice questions must stump all but one model to account for potential lucky guesses. Users are instructed to only submit questions that meet this criteria. We note due to non-determinism in models and a non-zero floor in multiple-choice questions, further evaluation on the dataset exhibits some low but non-zero accuracy.
+
+We use a standardized system prompt (Section C.1.1) to structure model responses into “Reasoning” and “Final Answer” formatting, and employ an automated GPT-4o judge to evaluate response correctness against the provided answers.
+
+B.2Human Review Instructions
+Questions which merely stump models are not necessarily high quality – they could simply be adversarial to models without testing advanced knowledge. To resolve this, we employ two rounds of human review to ensure our dataset is thorough and sufficiently challenging as determined by human experts in their respective domains.
+
+B.2.1Review Round 1
+We recruit human subject expert reviewers to score, provide feedback, and iteratively refine all user submitted questions. This is similar to the peer review process in academic research, where reviewers give feedback to help question submitters create better questions. We train all reviewers on the instructions and rubric below.
+
+Reviewer Instructions
+• Questions should usually (but do not always need to) be at a graduate / PhD level or above. (Score 0 if the question is not complex enough and AI models can answer it correctly.)
+– If the model is not able to answer correctly and the question is below a graduate level, the question can be acceptable.
+• Questions can be any field across STEM, law, history, psychology, philosophy, trivia, etc. as long as they are tough and interesting questions.
+– For fields like psychology, philosophy, etc. we usually check if the rationale contains some reference to a book, paper or standard theories.
+– For fields like law, the question text can be adjusted with “as of 2024”. Make sure questions about law are time-bounded.
+– Questions do not always need to be academic. A handful of movie, TV trivia, classics, history, art, or riddle questions in the dataset are OK.
+– Trivia or complicated game strategy about chess, go, etc. are okay as long as they are difficult.
+– We generally want things that require a high level of human intelligence to figure out.
+• Questions should ask for something precise and have an objectively correct, univocal answer.
+– If there is some non-standard jargon for the topic/field, it needs to be explained.
+– Questions must have answers that are known or solvable.
+– Questions should not be subjective or have personal interpretation.
+– Questions like “Give a proof of…”; “Explain why…”; “Provide a theory that explains…” are usually bad because they are not closed-ended and we cannot evaluate them properly. (Score 0)
+– No questions about morality or what is ethical/unethical. (Score 0)
+• Questions should be original and not derived from textbooks or Google. (Score 0 if searchable on web)
+• Questions need to be in English. (Score 1 and ask for translation in the review if the question is written in a different language)
+• Questions should be formatted properly. (Score 1-3 depending on degree of revisions needed)
+– Question with numerical answers should have results approximated to max 2-3 decimals.
+– Fix LaTeX formatting if possible. Models often get questions right after LaTeX formatting is added or improved.
+– Questions that can be converted to text should be (converting images to text often helps models get them right).
+Other Tips
+• Please write detailed justifications and feedback. This is going out to the question submitter so please use proper language and be respectful.
+– Explanations should include at least some details or reference. If the rationale is unclear or not detailed, ask in the review to expand a bit.
+– Please check if the answer makes sense as a possible response to the question, but if you do not have knowledge/context, or if it would take more than 5 minutes to solve, that is okay.
+• Please prioritize questions with no reviews and skip all questions with more than 3 reviews.
+• Please double check that the model did actually answer the question wrong.
+– Sometimes the exact match feature does not work well enough, and there are false negatives. We have to discard any exact match questions that a model got right.
+• On the HLE dashboard, look at least 10 examples reviewed by the organizers before starting to review, and review the examples from training.
+• The average time estimated to review a question 3-5 minutes.
+• Use a “-1 Unsure” review if the person submitting seems suspicious or if you’re not convinced their answer is right.
+Score	Scoring Guideline	
+Description
+0	Discard	
+The question is out of scope, not original, spam, or otherwise not good enough to be included in the HLE set and should be discarded.
+1	Major Revisions Needed	
+Major revisions are needed for this question or the question is too easy and simple.
+2	Some Revisions Needed	
+Difficulty and expertise required to answer the question is borderline. Some revisions are needed for this question.
+3	Okay	
+The question is sufficiently challenging but the knowledge required is not graduate-level nor complex. Minor revisions may be needed for this question.
+4	Great	
+The knowledge required is at the graduate level or the question is sufficiently challenging.
+5	Top-Notch	
+Question is top-notch and perfect.
+Unsure	-	
+Reviewer is unsure if the question fits the HLE guidelines, or unsure if the answer is right.
+ 
+B.2.2Review Round 2
+To thoroughly refine our dataset, we train a set of reviewers along with organizers to pick the best questions. These reviewers are identified by organizers from round 1 reviews as particularly high quality and thorough in their feedback. Different than the first round of reviews, reviewers are asked to grade both the question and look at feedback from round 1 reviewers. Organizers then approve questions based on reviewer feedback in this round. We employ a new rubric for this round below.
+
+Score	Scoring Guideline	
+Description
+0	Discard	
+The question is out of scope, not original, spam, or otherwise not good enough to be included in the HLE set and should be discarded.
+1	Not sure	
+Major revisions are needed for this question or you’re just unsure about the question. Please put your thoughts in the comment box and an organizer will evaluate this.
+2	Pending	
+You believe there are still minor revisions that are needed on this question. Please put your thoughts in the comment box and an organizer will evaluate this.
+3	Easy questions models got wrong	
+These are very basic questions that models got correct or the question was easily found online. Any questions which are artificially difficult (large calculations needing a calculator, requires running/rendering code, etc.) should also belong in this category. The models we evaluate cannot access these tools, hence it creates an artificial difficulty bar. Important: “Found online” means via a simple search online. Research papers/journals/books are fine
+4	Borderline	
+The question is not interesting OR The question is sufficiently challenging, but 1 or more of the models got the answer correct.
+5	Okay to include in HLE benchmark	
+Very good questions (usually has score of 3 in the previous review round). You believe it should be included in the HLE Benchmark.
+6	Top question in its category	
+Great question (usually has a score of 4-5 in the previous review round), at a graduate or research level. Please note that “graduate level” is less strict for Non-STEM questions. For Non-STEM questions and Trivia, they are fine as long as they are challenging and interesting.
+ 
+B.3Subject List
+We allow question contributors to choose or declare a subject the author felt best suited their question. We present the top fifty most popular subjects in HLE below, although we note there are over a hundred subjects in the overall dataset.
+
+Mathematics, Physics, Computer Science, Chemistry, Applied Mathematics, Trivia, Electrical Engineering, Biology, Linguistics, Medicine, Genetics, History, Economics, Ecology, Artificial Intelligence, Musicology, Philosophy, Neuroscience, Law, Art History, Biochemistry, Astronomy, Classics, Chess, Chemical Engineering, Microbiology, Classical Ballet, Materials Science, Poetry, Quantum Mechanics, Aerospace Engineering, Civil Engineering, Mechanical Engineering, Geography, Robotics, Data Science, Molecular Biology, Statistics, Immunology, Education, Logic, Computational Biology, Psychology, English Literature, Machine Learning, Puzzle, Cultural Studies, Marine Biology, Archaeology, and Biophysics.
+
+Appendix CEvaluation
+C.1Prompts
+C.1.1Evaluation
+We use the following system prompt for evaluating LLMs on multiple-choice questions:
+
+Your response should be in the following format:
+Explanation: {your explanation for your answer choice}
+Answer: {your chosen answer}
+Confidence: {your confidence score between 0% and 100% for your answer}
+We use the following system prompt for evaluating LLMs on exact-match questions:
+
+Your response should be in the following format:
+Explanation: {your explanation for your final answer}
+Exact Answer: {your succinct, final answer}
+Confidence: {your confidence score between 0% and 100% for your answer}
+We use the following system prompt to judge the model answers against the correct answers for our evaluations in Table 1. We used o3-mini-2025-01-31 with structured decoding enabled to get an extracted_final_answer, reasoning, correct, confidence extraction for each output.
+
+Judge whether the following [response] to [question] is correct or not
+based on the precise and unambiguous [correct_answer] below.
+[question]: {question}
+[response]: {response}
+Your judgement must be in the format and criteria specified below:
+extracted_final_answer: The final exact answer extracted from the
+[response]. Put the extracted answer as ’None’ if there is no exact, final
+answer to extract from the response.
+[correct_answer]: {correct_answer}
+reasoning: Explain why the extracted_final_answer is correct or incorrect
+based on [correct_answer], focusing only on if there are meaningful
+differences between [correct_answer] and the extracted_final_answer. Do
+not comment on any background to the problem, do not attempt to solve
+the problem, do not argue for any answer different than
+[correct_answer], focus only on whether the answers match.
+correct: Answer ’yes’ if extracted_final_answer matches the
+[correct_answer] given above, or is within a small margin of error for
+numerical problems. Answer ’no’ otherwise, i.e. if there if there is any
+inconsistency, ambiguity, non-equivalency, or if the extracted answer is
+incorrect.
+confidence: The extracted confidence score between 0% and 100% from
+[response]. Put 100 if there is no confidence score available.
+Below is an example of a structured response using LLM judge:
+
+Structured Judge Response Example
+[correct_answer]: 
+cos
+⁡
+(
+π
+n
+)
+2
+⁢
+(
+1
++
+cos
+⁡
+(
+π
+n
+)
+)
+[extracted_model_answer]: 
+cot
+⁡
+(
+π
+n
+)
+2
+⁢
+cot
+⁡
+(
+π
+2
+⁢
+n
+)
+[reasoning]: Using the half-angle identity 
+tan
+⁡
+(
+π
+2
+⁢
+n
+)
+=
+sin
+⁡
+(
+π
+n
+)
+1
++
+cos
+⁡
+(
+π
+n
+)
+ and recalling that 
+cot
+⁡
+x
+=
+cos
+⁡
+x
+sin
+⁡
+x
+, we express 
+cot
+⁡
+(
+π
+n
+)
+=
+cos
+⁡
+(
+π
+n
+)
+sin
+⁡
+(
+π
+n
+)
+ and 
+cot
+⁡
+(
+π
+2
+⁢
+n
+)
+=
+1
++
+cos
+⁡
+(
+π
+n
+)
+sin
+⁡
+(
+π
+n
+)
+. Forming the quotient 
+cot
+⁡
+(
+π
+n
+)
+2
+⁢
+cot
+⁡
+(
+π
+2
+⁢
+n
+)
+=
+cos
+⁡
+(
+π
+n
+)
+sin
+⁡
+(
+π
+n
+)
+2
+⋅
+1
++
+cos
+⁡
+(
+π
+n
+)
+sin
+⁡
+(
+π
+n
+)
+=
+cos
+⁡
+(
+π
+n
+)
+2
+⁢
+(
+1
++
+cos
+⁡
+(
+π
+n
+)
+)
+, where the common 
+sin
+⁡
+(
+π
+n
+)
+ cancels out. This detailed inline simplification shows that the model answer is equivalent to the correct answer.
+[correct]: yes
+C.2Text-Only Results
+Model	Accuracy (%) 
+↑
+Calibration Error (%) 
+↓
+GPT-4o	
+2.6
+90.3
+Grok 2	
+3.8
+92.3
+Claude 3.5 Sonnet	
+4.9
+86.7
+Gemini 1.5 Pro	
+5.2
+91.0
+Gemini 2.0 Flash Thinking	
+7.1
+88.6
+o1	
+8.4
+91.5
+DeepSeek-R1	
+8.6
+81.4
+o3-mini (medium)∗	
+11.1
+91.5
+o3-mini (high)∗	
+14.0
+92.8
+Table 2:Accuracy and RMS calibration error of models from Table 1 on the text-only questions of HLE, representing 90% of the public set.
+C.3Non-Reasoning Model Token Counts
+Refer to caption
+Figure 6:Average output token counts of non-reasoning models.
+C.4Model Versions
+Model	Version
+GPT-4o	gpt-4o-2024-11-20
+Grok 2	grok-2-latest
+Claude 3.5 Sonnet	claude-3-5-sonnet-20241022
+Gemini 1.5 Pro	gemini-1.5-pro-002
+Gemini 2.0 Flash Thinking	gemini-2.0-flash-thinking-exp-01-21∗
+o1	o1-2024-12-17
+DeepSeek-R1	January 20, 2025 release
+o3-mini (medium) & o3-mini (high) 	o3-mini-2025-01-31
+Table 3:Evaluated model versions. All models use temperature 0.0 when configurable and not otherwise stated. ∗The first version of the paper along with Figure 5 used the now deprecated 12-19 model with temperature 0.0. The new model is sampled at temperature 0.7.
+C.5Benchmark Difficulty Comparison
+In Figure 1, we evaluate the accuracy of all models on HLE using our zero-shot chain-of-thought prompts (Section C.1.1). On prior benchmarks, we list our sources here.
+
+For GPT-4o and o1-preview, we report zero-shot, chain-of-thought results from OpenAI found at https://github.com/openai/simple-evals.
+
+For Gemini 1.5 Pro, we report 5-shot MMLU Team et al. [49] and other results from Google’s reported results here.
+
+For Claude 3.5 Sonnet, we report 0-shot chain-of-thought results from Anthropic [4].

@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Dark theme for OpenStreetMap */
+.leaflet-container {
+  @apply bg-background;
+}
+
+.dark-tiles {
+  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+}
+
+.leaflet-control-attribution {
+  @apply bg-background/80 text-muted-foreground text-xs;
+}
+
+.leaflet-control-attribution a {
+  @apply text-primary hover:text-primary/80;
+}
+
+.leaflet-control-zoom a {
+  @apply bg-background text-foreground border-border hover:bg-accent;
+}
+
+.leaflet-tooltip {
+  @apply bg-background text-foreground border-border;
+}

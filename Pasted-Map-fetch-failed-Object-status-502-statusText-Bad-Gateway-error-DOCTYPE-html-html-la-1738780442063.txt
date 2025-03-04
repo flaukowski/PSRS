@@ -1,0 +1,52 @@
+Map fetch failed: 
+Object {status: 502, statusText: "Bad Gateway", error: "<!DOCTYPE html>↵<html lang="en">↵↵<head>↵  <title>Hmm... We couldn&#39;t reach this…"}
+
+Map data fetch error: 
+Error {}
+
+Fetching map data with auth: 
+Object {hasAddress: true, useInternalToken: false}
+Map response status: 502
+Map fetch failed: 
+Object {status: 502, statusText: "Bad Gateway", error: "<!DOCTYPE html>↵<html lang="en">↵↵<head>↵  <title>Hmm... We couldn&#39;t reach this…"}
+
+Map data fetch error: 
+Error {}
+
+Fetching map data with auth: 
+Object {hasAddress: true, useInternalToken: false}
+Map response status: 502
+Map fetch failed: 
+Object {status: 502, statusText: "Bad Gateway", error: "<!DOCTYPE html>↵<html lang="en">↵↵<head>↵  <title>Hmm... We couldn&#39;t reach this…"}
+
+Map data fetch error: 
+Error {}
+
+Fetching map data with auth: 
+Object {hasAddress: true, useInternalToken: false}
+Map response status: 502
+Map fetch failed: 
+Object {status: 502, statusText: "Bad Gateway", error: "<!DOCTYPE html>↵<html lang="en">↵↵<head>↵  <title>Hmm... We couldn&#39;t reach this…"}
+
+Map data fetch error: 
+Error {}
+
+Fetching map data with auth: 
+Object {hasAddress: true, useInternalToken: false}
+Map response status: 502
+Map fetch failed: 
+Object {status: 502, statusText: "Bad Gateway", error: "<!DOCTYPE html>↵<html lang="en">↵↵<head>↵  <title>Hmm... We couldn&#39;t reach this…"}
+
+Map data fetch error: 
+Error {}
+
+Fetching map data with auth: 
+Object {hasAddress: true, useInternalToken: false}
+Map response status: 502
+Map fetch failed: 
+Object {status: 502, statusText: "Bad Gateway", error: "<!DOCTYPE html>↵<html lang="en">↵↵<head>↵  <title>Hmm... We couldn&#39;t reach this…"}
+
+at t.value (https://61713cfd-62aa-4231-bdd2-e42328d5516f-00-3a4mhzwzesizs.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://61713cfd-62aa-4231-bdd2-e42328d5516f-00-3a4mhzwzesizs.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://61713cfd-62aa-4231-bdd2-e42328d5516f-00-3a4mhzwzesizs.riker.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://61713cfd-62aa-4231-bdd2-e42328d5516f-00-3a4mhzwzesizs.riker.replit.dev/__replco/static/devtools/eruda/3

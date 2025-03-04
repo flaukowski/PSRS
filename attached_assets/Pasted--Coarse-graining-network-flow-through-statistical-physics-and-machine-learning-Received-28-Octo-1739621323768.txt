@@ -1,0 +1,1045 @@
+ Coarse-graining network flow through
+ statistical physics and machine learning
+ Received: 28 October 2023
+ Accepted: 6 January 2025
+ Checkforupdates
+ 1234567890():,;
+ 1234567890():,;
+ Zhang Zhang 1,2,3,7
+ , Arsham Ghavasieh4,7, Jiang Zhang
+ Manlio De Domenico3,5,6
+ 1,2 &
+ Information dynamics plays a crucial role in complex systems, from cells to
+ societies. Recent advances in statistical physics have made it possible to cap
+ture key network properties, such as flow diversity and signal speed, using
+ entropy and free energy. However, large system sizes pose computational
+ challenges. We use graph neural networks to identify suitable groups of
+ components for coarse-graining a network and achieve a low computational
+ complexity, suitable for practical application. Our approach preserves infor
+mationflowevenundersignificantcompression,asshownthroughtheoretical
+ analysis and experiments on synthetic and empirical networks. We find that
+ the model merges nodes with similar structural properties, suggesting they
+ perform redundant roles in information transmission. This method enables
+ low-complexity compression for extremely large networks, offering a multi
+scale perspective that preserves information flow in biological, social, and
+ technological networks better than existing methods mostly focused on net
+work structure.
+ Complex networks represent the structure of several natural and artifi
+cial complex systems1, that exhibit ubiquitous properties such as het
+erogeneous connectivity2, e
+ fficient
+ information transmission3,
+ mesoscale4 and hierarchical5,6 organization. Moreover, additional infor
+mation can be used toenrich these models considering multiplexity and
+ interdependence7–11, high-order behavior and mechanisms12–16. T
+ he
+ richness of network modeling and analysis opens the door for a wide
+ variety of applications across multiple disciplines, ranging from gene
+ regulation17,18 and protein interaction19 networks in molecular biology,
+ brain networks20,21 in neuroscience, trafficnetworks22 in urban planning,
+ to social networks23,24 in social sciences.
+ Furthermore,networksciencehasbeenusedtostudytheflowof
+ information within networks, from the electrochemical signals tra
+veling between brain areas and pathogens spreading among social
+ systems to the flights in airline networks and the messages being
+ shared on social media. To this aim, often, a dynamical process is
+ exploited that governs the short- to long-range flow between the
+ components25–39. Yet, the largenessof manyreal-world systemsposes
+ a challenge, due to computational complexity and components’
+ redundancies in roles and features, hampering a clear understanding
+ of how complex systems operate. Therefore, an interesting possibi
+lity is to search for proper compressions of networks– by means of
+ grouping and coarse-graining nodes with redundant features or
+ roles– that preserve the flow.
+ The network renormalization method focuses on compres
+sing the size of the network while preserving its core properties.
+ Several pioneering methods have been proposed to coarse-grain
+ the components. Song et al.40 brought the concept of the Box
+Covering method into the network renormalization realm41,with
+ subsequent works primarily focused on enhancing its
+ efficiency42–44. Generally, these methods treat the network as a
+ spin system45 and study the universality classes46 and fractal
+ properties47. As another example, geometric renormalization on
+ unweighted graph48 andweightedgraph49 embeds the network
+ 1SchoolofSystemsScience,BeijingNormalUniversity,Beijing,China.2SwarmaResearch,Beijing,China.3DepartmentofPhysics&Astronomy‘GalileoGalilei’,
+ University of Padua, Padua, Italy. 4Center for Complex Networks and Systems Research, Luddy School of Informatics, Computing, and Engineering, Indiana
+ University, Bloomington, IN, USA. 5Padua Center for Network Medicine, University of Padua, Padua, Italy. 6Istituto Nazionale di Fisica Nucleare, Sez.,
+ Padova,Italy. 7These authors contributedequally: ZhangZhang,ArshamGhavasieh. e-mail:zhang.zhang@mail.bnu.edu.cn;manlio.dedomenico@unipd.it
+ Nature Communications|        (2025) 16:1605 
+1
+Article
+ https://doi.org/10.1038/s41467-025-56034-2
+ Fig. 1 | A Schematic representation of our framework. The message-passing
+ mechanism of the GNN collects neighbors' information to create a vector repre
+sentation for each node. The Softmax method normlizes the vector leading to a
+ nodegrouping.Thenodefeaturesweusehereincludedegreeσd,degree’sX2---i.e.,
+ given by X2
+ i =ðE½d σdÞ2=E½dwhere d is the degree of neighboring nodes---,
+ clustering coefficient and core-number. In this case, 3 groups are considered for
+ simplicity, represented in the group matrix S.UsingbothS and the original
+ A=
+ M
+ adjacency matrix A, we proceed with a compression operation expressed as:
+ ^
+ N STAS. In this operation, ^ A stands for the adjacency matrix of the macro
+ network, whereas M and N symbolize the number of nodes within the macro and
+ micro networks, respectively. The deviation of macro network’s normalized parti
+tion function from the original network is used as the loss function to supervise
+ the GNN.
+ structure into a two-dimensional hyperbolic space, groups the
+ nodes based on their angle similarities, and merge them into a
+ macro network: in that space they unravel the multiscale orga
+nization of real-world networks. In the same spirit, the effective
+ geometry induced by network dynamics have been used to
+ uncover the scale and fractal properties50.Asanexample,spectral
+ coarse graining51 focuses on the dynamics on top of networks and
+ attempts to preserve the large-scale random walk behavior of the
+ network during structural compression. More recently, an
+ approach based on Laplacian renormalization52 was proposed
+ based on diffusion dynamics on top of the network, corre
+sponding to the renormalization of a free field theory in network
+ structures. This method pushed the boundaries of RG to include
+ structural heterogeneity by preserving the slow modes of diffu
+sion. However, none of these renormalization methods is
+ designed to preserve the macroscopic features of information
+ dynamics simultaneously at all propagation scales for all
+ network types.
+ Similar to the Laplacian renormalization group, we capitalize
+ on network density matrices33 to describe the information
+ dynamics in the system53. From density matrices, we derive the
+ typical macroscopic indicators like network entropy and free
+ energy, which, respectively, quantify how diverse the diffusion
+ pathways are53–55 and how fast signals travel in the system55,56.We
+ show that such measures can be derived from the network par
+tition function Zτ, as in equilibrium thermodynamics. On this
+ theoretical basis, we deduce that a coarse-graining that preserves
+ the shape of partition function across the propagation scale τ,
+ preserves the macroscopic indicators of information flow.
+ Therefore, we aim to reach a coarse-graining with minimum
+ deviations from the full partition function profile.
+ We bypass the challenge of finding an analytically closed solu
+tion for general complex networks. Avoiding simplifying assump
+tions and cases of poor practical interest, we leverage recent
+ advances in machine learning based on graphs to develop the fra
+mework of the Network Flow Compression Model(NFC Model), as
+ depicted in Fig. 1. More technically, we use graph neural networks57,58
+ to process and aggregate nodes’ local features like the number of
+ connections (degree), and reach a high-level representation of them.
+ In the representation space, it identifies groups of nodes that play
+ redundant roles in information flow whose aggregation does not
+ drastically change the flow and coarse-grain them to reach suitable
+ compressions, minimizing the partition function deviation. While
+ most coarse-graning methods define and identify supernodes by
+ grouping nodes with similar local structures, their notion of simi
+larity is typically predefined48,49. In contrast, ourapproachleverages a
+ machine learning model to automatically learn the vital similarity
+ features that can be used to compress the network while preserving
+ the macroscopic flow properties. For instance, in the BA network,
+ hub nodes are coarsened together, while leaf nodes are coarsened
+ together. In real-world scientist collaboration networks, scientists
+ with the highest number of collaborations are coarsened into one
+ group, even if they don’t collaborate with(are connected to) each
+ other. Experimental results in subsequent sectionsand showthatour
+ approach preserves the information flow even for large compres
+sions, in synthetic and empirical systems. The analysis of the model’s
+ interpretability in subsequent sections indicates that this strategy is
+ reasonable: it preserves the function of local structures in the pro
+cess of information diffusion while reducing the number of redun
+dant structures.
+ Our work serves a purpose that is ultimately different from the
+ network renormalization group methods. In fact, these methods aim
+ to uncover the scaling behavior of systems. For instance, renormali
+zation group methods preserve specific topological properties when
+ compressing networks, like the degree distribution of scale-free net
+works. However, in other cases, for instance, in network with one or
+ multiplecharacteristic topologicalscales, thesemethods are expected
+ to capture the changes in network properties, including the flow, as it
+ gets compressed. In contrast, our approach seeks to find a coarse
+graining that preserves the flow properties, regardless of the specific
+ features of a topology. Therefore, it is expected to outperform others
+ in preserving the flow, when compared across distinct network
+ Nature Communications|        (2025) 16:1605 
+2
+Article
+ https://doi.org/10.1038/s41467-025-56034-2
+ Fig. 2 | Compression for Synthetic Networks. Visual representation of the com
+pression process applied to two representative Stochastic Block Model (SBM)
+ networks (mixing parameters μ of 0.029 and 0.127, respectively) and Barabasi
+Albert (BA) networks (numbers of links per node m of 1 and 2). The second row
+ visualizesthestructureofthemacronetworkthatwascompressedto35nodes.The
+ third row showstheMeanAbsolute Errorinthe partition function beforeand after
+ compression at different sizes. We selected 10 different sizes uniformly in the
+ logarithmic space between5 and200.Thelast rowshowstheMeanAbsoluteError
+ of the partition function curve for different methods when compressing the net
+work to 35 nodes.
+ families. We confirm this expectation through a series of numerical
+ experiments demonstrated in Fig. 2.
+ Finally, we train our graph neural networks on a vast number of
+ real-world networks, enabling generalization to the datasets it has not
+ seen before. We show that it leads to rapid and highly effective com
+pressions across networks from various domains.
+ Results
+ Macroscopic indicators for information flow
+ Let G be a network of N nodes and ∣E∣ connections, respectively. The
+ connectionsareoftenencodedbytheadjacencymatrixA,whereAij=1
+ if nodes i and j are connected, and Aij = 0 otherwise. For a weighted
+ network, the values Aij can be non-binary. Information exchange
+ between the components happens through the connections.
+ We focus on diffusion as one of the simplest and most versatile
+ processes to proxy the flow of information59 governed by the graph
+ Laplacian matrix L = D − A,whereD is a diagonal matrix, with Dii = ki
+ being the connectivity of node i. Consequently, we write the diffusion
+ equation and its solution:
+ where ψτ is a concentration vector, describing the distribution of a
+ quantity over nodes and e−τL gives the time-evolution operator, with
+ e τL
+ ij 
+giving the flow from node j to i after τ time steps.
+ The network density matrix can be defined as
+ ρτ =
+ e τL
+ Zτ 
+,
+ ð2Þ
+ where Zτ =Trðe τLÞ is the network counterpart of the partition func
+tion. In fact, Eq. (2) describes a superposition of an ensemble of
+ operators (the outer product of eigenvectors of the Laplacian matrix)
+ that guide the flow of information in the system53,60, with applications
+ ranging from classification of healthy and disease states39,61 and
+ robustness analysis62,63 to dimensionality reduction of multilayer
+ networks56 and renormalization group52.
+ ∂τψτ = Lψτ,
+ ψτ =e τLψ0,
+ Moreimportantly,the network VonNeumannentropydefined by
+ Sτ = Trðρτ logρτÞhasbeenstudiedasameasureofhowdiversethe
+ system responds to perturbations53,54, and the network free energy,
+ Fτ = logZτ=τ,asameasureofhowfastthesignaltransportbetween
+ the nodes55,56.
+ ð1Þ
+ Since the network density matrix is Gibbsian (Eq. (2)) and the
+ network internal free energy can be defined as Uτ =TrðLρτÞ,wecan
+ Nature Communications|        (2025) 16:1605 
+3
+Article
+ Machine learning model
+ https://doi.org/10.1038/s41467-025-56034-2
+ write the network free and internal energy and Von Neumann entropy
+ in terms of Zτ and its derivative:
+ Fτ = logZτ=τ
+ Uτ = ∂τ logZτ
+ Sτ =τðUτ FτÞ,
+ ð3Þ
+ ð4Þ
+ ð5Þ
+ exactly like in equilibrium thermodynamics. It is noteworthy that
+ having a compressednetworkwithacompressedZτmatching the one
+ of the original network mathematically guarantees identical global
+ information dynamics, measured in terms of macroscopic physics
+ indicators such as network entropy and free energy. We consider a
+ compression where the system changes size from NN0, leadingtoa
+ new Laplacian ðL0Þ and a new partition function ðZ0Þ. Here, we aim to
+ reach a compression that follows:
+ Z =γZ0,
+ ð6Þ
+ regardless of τ,withminimumerror.
+ In fact, if the two networks have different sizes, the only valid
+ value for the multiplier is γ=N=N0. A simple argument to support this
+ claim is thatatτ=0itcanbeshownthatZ=NandZ0 =N0,regardlessof
+ the networktopology.Therefore,theonlysolutionnotrejected bythe
+ counter example of τ = 0, which gives the maximum value for the
+ partition function, is γ =N=N0.Ifγ=N=N0 with N and N0 being the sizes
+ of the original and the reduced systems, these transformations can be
+ interpreted as size adjustments.
+ Weshowthatsuchacompressionsimultaneouslypreservesother
+ important functions, like entropy and free energy, after size adjust
+ment. For instance, the system’s entropy has its maximum S=logN at
+ τ =0,whichcanbetransformedintothecompressedentropywiththe
+ subtraction of the factor logγ as size adjustment S ! S logγ.Simi
+larly, for free energy F = logZ=τ, the size required adjustment
+ reads logZ=τ ! logZ=τ+logγ=τ.
+ The partition function transformation we discussed earlier
+ (Z → γZ, and therefore Z0 =Z=γ), automatically guarantees both trans
+formations:
+ S
+ 0 = τ∂τ logZ0 τF0
+ = τ∂τ logZ0+τlogZ0
+ = τ∂τ½logZ logγ+logZ logγ
+ =S logγ,
+ F0 = 
+logZ0
+ τ = lo
+ gZ=γ
+ τ =F+ logγ
+ τ :
+ ð7Þ
+ ð8Þ
+ Also, since the von Neumann entropy of the coarse-grained sys
+tem is given by
+ S
+ 0 =τU0 +logZ0,
+ the transformation of the internal energy can be obtained as:
+ S+logγ=τU0+logγ+logZ,
+ τU+logZ =τU0+logZ,
+ U=U0,
+ ð9Þ
+ ð10Þ
+ In the following section, we use machine learning to find com
+pressions replicating the original entropy and free energy curves by
+ approximating Z0 =Z=γ, for all network types across all values of τ.
+ Graph neural networks are a class of models suited for machine
+ learning tasks on graphs that leverage node features as structural
+ information64,65. Based on the fundamental idea of aggregating and
+ updating node information with learnable functions, graph neural
+ networks have spawned numerous variants such as graph convolu
+tional networks66, graph attention networks67, graph isomorphism
+ networks68, and graph Transformers69. They have been widely
+ applied to problems such as node classification70, structural
+ inference71,generativetasks72, and combinatorial optimization tasks73
+ on graphs.
+ Ourapproachtosolvingthenetworkcompressionproblemusing
+ graph neural networks is illustrated in Fig. 1. Here, we employ graph
+ isomorphism networks to aggregate node features and decide on the
+ grouping of nodes.Nodeswithinthesamegrouparecompressedinto
+ a supernode. Also, the sum of their connections becomes a weighted
+ self-loop of the supernode. Of course, the inter-group connections
+ shapetheweightedlinksbetweendifferentsupernodes.Toassesshow
+ effective a coarse-graining is, we compare the Mean Absolute Error
+ (MAE) of the normalized partition functions,Z
+ N,whereN is the number
+ of nodes in the original network or the compressed one. Therefore,
+ MAEistheloss function that weuse to train the graph neuralnetwork.
+ Note that, through the optimization, the model continuously adjusts
+ the mapping from node local structural features to node groupings,
+ using gradient descent. This adjustment ensures that the resulting
+ macroscopic network has a partition function resembling the original
+ network.
+ Here we mention a number of suitable properties of our model.
+ First, since every edge in the original network becomes a part of a
+ weighted edge in the macroscopic network, the connectedness of the
+ network is guaranteed. If the original network is connected, the mac
+roscopicnetworkwillalsobeconnected.Second,thenumberofnodes
+ in the macroscopic network can be flexibly configured as a hyper
+parameterthatcanbetunetosatisfydifferenttasks.Lastly,asweshow
+ in the next sections, the time complexity of our model is O(N + E),
+ where N and E are the number of nodes and edges in the original
+ network, respectively. This is a considerable edge over other models
+ that often perform at O(N3)— including box-covering, laplacian RG, or
+ O(N2)— for instance, geometric RG. For this reason, we are able to
+ compress very large networks. Please see the supplementary material
+ for a more detailed analysis of time complexity (Supplementary
+ Note7)andexperimentonnetworkcompressionwith100,000nodes
+ (Supplementary Fig. 3).
+ Howour method differs from Laplacian Renormalization
+ Group (LRG)
+ Since both methods use network density matrices, it is necessary to
+ discuss their differences. The LRG was among the first to introduce
+ Kadanoff’sdecimationbasedondiffusiondynamicsonnetworksasthe
+ core of the renormalization process. It has successfully pushed the
+ boundaries of RG to include structural heterogeneity, a feature widely
+ observed in complex systems. To do so, LRG focuses on the specific
+ heatatthespecificscaleofphasetransitiontodefinetheir information
+ cores52,60 and use them to perform renormalization.
+ It is crucial to note that the difference between LRG and our
+ method is not limited to the machine learning implementation.
+ Instead, the fundamental difference is in the theoretical con
+ceptualizationoftheRGproblem.Webaseourmethodonthefactthat
+ the partition function contains the full information of the macroscopic
+ descriptorsoftheflow,includingnetworkentropyandfreeenergy—as
+ demonstrated in the previous sections. Therefore, by trying to repli
+cate the full partition function profile at all propagation scales (all
+ values of τ) we replicate the macroscopic features like the diversity of
+ diffusion pathways and the flow speed in reaching distant parts of the
+ network.
+ Nature Communications|        (2025) 16:1605 
+4
+Article
+ Table 1 | Statistics for two real-world networks
+ https://doi.org/10.1038/s41467-025-56034-2
+ It is worth mentioning thatLRGcanbeusedtorenormalizeatany
+ particular scale (τ). However, they discard the fast modes of diffusion
+ processes (corresponding to eigenvalues greater than1
+ τ). Instead, our
+ methodpreservesthecompletedistributionofeigenvaluesatallscales
+ simultaneously by maintaining the full behavior of the partition
+ function
+ Finally, in addition to the discussedtheoreticalarguments,weuse
+ various numerical evidence to demonstrate that our domain of
+ applicability is much larger than LRG’s. As mentioned before, LRG is
+ designed for heterogeneous networks like Barabasi-Albert (BA) and
+ scale-free trees. However, the topology of real-world networks is not
+ limited to what the BA model can generate. The two decades of net
+work science have revealed that real-world networks also exhibit
+ important features such as segregation while integration and order
+ while disorder—i.e., modules,motifs,etc. That iswhythecompression
+ methods must eventually go beyond the current limitations and
+ model-specific assumptions.
+ In the following sections, we compare the performance of NFC
+ Model and other widely used methods, including LRG, on both syn
+thetic andempiricalnetworks.PleaseseethesupplementaryNote3for
+ a more detailed comparison with LRG on different datasets regarding
+ the preservation of information flow (Supplementary Fig. 5) and
+ entropy (Supplementary Fig. 7), the retention of eigenvalue distribu
+tions (Supplementary Fig. 6), and differences in supernode composi
+tion (Supplementary Fig. 8) and macroscopic network structures
+ (Supplementary Fig. 9)— which comparison clearly shows a large dif
+ference between our method and LRG, both in the performance and
+ the way they group nodes together.
+ Synthetic networks compression
+ Here, we use our model to compress four synthetic networks: two
+ Stochastic BlockModel(SBM)withmixingparameters(μ)of0.029and
+ 0.127, and two Barabási–Albert (BA) models with parameters m =1,2,
+ all with 256 nodes (See Fig. 2).
+ As expected, for very large compressions, we find an increase in
+ the deviation between partition functions— i.e., cost. However, inter
+estingly, the compression error exhibits an approximately scale-free
+ relationship with network size, meaning that no compression size is
+ special. We visualize the compressed network with 35 nodes in the
+ secondrowofsubfigures inFig. 2, wherethe nodes in the compressed
+ network and the corresponding nodes in the original network were
+ assigned the same color.
+ We show that our approach outperforms others including Box
+Covering,GeometricRenormalization,andLaplacianRenormalization.
+ Also, our results indicate that the mesoscale structure of SBM and the
+ presence of hubs in BA play important roles in the topology of the
+ resulting compressed network. The nodes belonging to the same
+ communityintheoriginalSBMnetworksoftengrouptogethertoform
+ asupernodeinthemacro-network.Moresurprisingly, intheBAnet
+work, nodes with a similar number of connections were typically
+ coarse-grained together.
+ This finding suggests that regardless of being directly connected
+ or not, nodes with similar local structures need to group together
+ when the goal is recovering the flow of information. Here, the coarse
+graining of nodes with similar local structures is learned by the model
+ automatically and was not predetermined a priori.
+ Empirical networks compression
+ We analyze two representative empirical networks to test the cap
+ability of our method. The networks include the U.S. Airports, taken
+ from Open Flights and Netzschleuder, and the Scientists Co
+Authorship Network used in 200674.
+ In the U.S. Airports Network, nodes and edges represent airports
+ and flight routes between them— i.e., a binary and undirected edge
+ connects two airports if there is at least one flight between them.
+ Network
+ #Nodes #Edges Density Averageclustering
+ coefficient
+ Co-Authorship 379
+ 914
+ U.S. Airports
+ 0.013
+ 549
+ 2787
+ 0.741
+ 0.019
+ 0.491
+ Similarly, in the co-authorship network, nodes are individual
+ researchers, and anedge exists between twoscientists if they have co
+authored at least one paper. (For more details on the datasets, see
+ Table 1).
+ Firstly, we reduce the US airport network up to 50 and 20
+ supernodescompressionsizes(SeeFig.3).Wehighlightthe15airports
+ with the highest connectivity, located in the cities of Atlanta, Denver,
+ Chicago,Dallas-FortWorth,Minneapolis,Detroit,LasVegas,Charlotte,
+ Houston, Philadelphia, Los Angeles, Washington, Salt Lake City, and
+ Phoenix. Interestingly, these 15 airports group together to form only a
+ fewsupernodes,owingtotheirsimilarlocalstructures— i.e., degree, in
+ this case— in both compressions. Furthermore, in the 50-node macro
+network, cities like Atlanta and Denver are compressed into one
+ supernode, and cities such as Detroit and Las Vegas shape another
+ supernode. Whereas, in the compression with 20 supernodes, cities
+ including Atlanta, Denver, Detroit and Las Vegas join into one single
+ supernode.
+ The compression of the network scientist system confirms the
+ previous results (See Fig. 3). For instance, the five highest-degree
+ researchers of this dataset, including Barabasi, Jeong, Newman, Oltvai,
+ and Boccaletti, form one supernode, when the size of the macro
+network is 10. Note that they are not a tightly connected group in the
+ original network. In fact, Newman, Barabasi, and Boccaletti are not
+ even connected in this network. This further suggests that having
+ similar local structures in the network is a key factor in compression.
+ Finally, we compare the partition function deviation achieved by
+ different compression methods and show that our approach clearly
+ outperforms others (See Fig. 3), in the case of both empirical systems.
+ For moredetailed information on the groupings of all airports, please
+ see Supplementary Table 1.
+ Overall, confirmingthesyntheticnetworksanalysis, ourapproach
+ generates macro networks closely resembling the information flow in
+ the original networks by coarse-graining nodes of similar local
+ structures.
+ Interpretability of the compression procedure
+ In experiments withbothsynthetic andreal-world networks,wefound
+ that our machine-learning model merges nodes with similar local
+ structures to preserve information flow. Here, we attempt to provide
+ an explanation of how exactly it works.
+ Firstly, clustering nodes with similar local structures together
+ preserves the function of that local structure within the original net
+work while reducing structural redundancy. This can be intuitively
+ understood through the analysis of several typical topological
+ features.
+ High clustering coefficient nodes. Nodes with a high clustering
+ coefficient often have neighbors that are interconnected, acting to
+ trap information locally during the diffusion of information in the
+ network. Grouping nodes with a high clustering coefficient together,
+ their numerous interconnections will become a high-weight self-loop
+ on the supernode, similarly playing a role in trapping information
+ locally, as shown in Fig. 4,subplota.
+ Hubs.Hubnodesactasbridgesforglobalinformationdiffusionwithin
+ thenetwork.Byclusteringhubnodestogether,theedgesbetweenhub
+ nodes and other nodes transform into connections between
+ Nature Communications|        (2025) 16:1605 
+5
+Article
+ https://doi.org/10.1038/s41467-025-56034-2
+ Fig. 3|Compressionofempiricalnetworks.TheU.S.AirportNetworkandtheCo
+Authorshipnetworkofscientists(2006)alongsidethecorrespondingcompression
+ outcomes under different macro node configurations. We further illustrate the
+ macronodesassociatedwiththe top15 airports and top5 scientistsasdetermined
+ by node degree, some of the top nodes are marked in the original network. It
+ becomes apparent that these most emblematic nodes primarily cluster within a
+ limited number of macro nodes, supporting the hypothesis thatnodes with similar
+ local structures gravitate towards similar groups. As the macro airport network
+ shrinks, these nodes amalgamate into fewer macro nodes, suggesting that the
+ diminishing expressivity of the macro network necessitates the model to overlook
+ the distinctions between these nodes. The three subsequent subgraphs delineate
+ the Mean Absolute Error (MAE) of the normalized partition functions in the com
+pression results derived fromourmethodagainstothercompetitiveapproaches.It
+ is worth noting that, due to the inability of some comparative methods (such as
+ Box-Covering) to precisely control the size of the network after compression, we
+ allow them to compress a network larger than the target size and compare it with
+ our method.
+ supernodes in the compressed network, still ensuring the smooth
+ passage of global information. Suppose we group a hub node and its
+ neighbors into one; then, their interconnections become self-loop of
+ that supernode that trap the information locally, acting as a barrier to
+ global information transmission, as shown in Fig. 4,subplotb.
+ Strong communities. Networks with distinct community structures
+ experience slow global information diffusion (due to few inter
+community edges). Grouping nodes of the same community toge
+ther transforms the numerous intra-community edges into self-loops
+ on the supernodes, trapping information locally. Meanwhile, the few
+ inter-community edges become low-weight edges between super
+nodes, similarly serving to slow down the speed of global information
+ diffusion as shown in Fig. 4, subplotc. Through these three typical
+ examples, we find that structural redundancy has been reduced while
+ the corresponding functions are preserved. Therefore, this approach
+ naturally benefits the preservation of information flow when com
+pressing networks.
+ Then, based on the principle that “nodes with similar local
+ structures are grouped together," the graph neuralnetworkstillneeds
+ to optimize the specific grouping strategy. This is mainly because, on
+ one hand, the number of groups is often far less than the number of
+ typesofnodeswithdifferentlocalstructures(imagineanetworkwith3
+ different types of nodes, whereaswe needtocompressitintoamacro
+ network with 2 nodes). On the other hand, our model produces con
+tinuous grouping results, for example, a certain type of node might
+ enter group A with an 80% ratio and group B with a 20% ratio. Each
+ different ratiorepresents anewgroupingstrategy,andweneedtofind
+ the most effective one from infinitely many continuous grouping
+ strategies, which is an optimization problem, hence requiring the aid
+ of a machine learning model. Subplots d − f of Fig. 4 show discrete
+ grouping strategies and the learned continuous grouping strategy for
+ compressing a network with 5 types of nodes into a macroscopic
+ network with 4 supernodes.
+ From Fig. 4, we can see that different discrete grouping strategies
+ produce different macroscopic network structures (subplot d), our
+ Nature Communications|        (2025) 16:1605 
+6
+Article
+ https://doi.org/10.1038/s41467-025-56034-2
+ Fig. 4 | Grouping strategies and the structure of the macroscopic network. a
+ Illustration of the compression ofnodeswithhighclusteringcoefficients. Both the
+ high-clustering nodes and their corresponding macro-nodes tend to trap infor
+mation locally. b Demonstration of the compression of hub nodes. Both the hub
+ nodes andtheir corresponding macro-nodes actasbridges for global information
+ diffusion. c Compression of community structures: Nodes within the same com
+munityarecompressedintoasupernode,which,similartotheoriginalcommunity
+ structure, tends to trap information locally. d We show the macroscopic network
+ after compression using different hard(discrete) grouping strategies for a toy
+ network with 8 nodes and 5 typesof different local structures, and the changes in
+ the corresponding partition function. e The soft(continuous) grouping strategy
+ learned by our model. In (f) we present the macroscopic network structure given
+ by the grouping strategy from (e). g Comparison of the normalized partition
+ function error before and after compression under different grouping strategies.
+ learned continuous grouping strategy (subplot e), the macroscopic
+ network structure (subplot f), and the partition function difference
+ corresponding to different grouping strategies (subplot g). It is evident
+ from the figure that the error in preserving information flow with our
+ learned continuous grouping strategy is lower than that of all discrete
+ grouping strategies. In summary, this is how ourmodelworks:basedon
+ the fundamental useful idea that “nodes with similar local structures
+ enter the same group," our model uses the gradient descent algorithm
+ to select one of the infinitely many solutions (continuous grouping
+ strategies) that results in a lower error of the partition function.
+ Compressing networks from different domains
+ To further explore the applicable fields of our model, we conducted
+ further analysis on various real networks and attempt to understand
+ the differences in compression outcomes acrossdifferent domains. In
+ our upcoming experiments, we have selected 25 networks from 8
+ different fields: biological networks, economic networks, brain net
+works, collaboration networks, email networks, power networks, road
+ networks,andsocialnetworks.Their nodenumberrangesfrom242to
+ 5908, and the number of edges ranges from 906 to 41,706. See Sup
+plementary Table 2 for more information of these networks.
+ Wecompressed all networks at various scales, with compression
+ ratios ranging from 1% and 2% up to 25% of the original network size.
+ Weaimedtoexplorehowtheeffectivenessofcompressionvarieswith
+ the compression ratio across networks from different domains. The
+ results are shown in the left subplot of Fig. 5. First, we observed that in
+ most of the cases, the error of the normalized partition function
+ (measuredbyMeanAbsoluteError)islessthan10−2,indicatingthatour
+ model performs well across networks from different domains. More
+over, regarding the differences between networks from various
+ domains, we found thatthe density of the networkhas a major impact
+ on compression efficiency. As shown in the right subplot of Fig. 5,we
+ Nature Communications|        (2025) 16:1605 
+7
+plottedthedensityagainsttheerrorinthepartitionfunctionbefore
+ andaftercompressionforallnetworks,andobservedapositivecor
+relation(correlationcoefficientof0.856):anetworkwithlowerdensity
+ tendstobemoreeasilycompressed. Itisplausiblethatthishappens
+ becauseanincreaseinthenumberofconnectionsmakesthepathways
+ for informationtransmissionmorecomplex, therebyincreasingthe
+ difficultyofcompression.
+ Onecompressionmodelformanyreal-worldnetworks
+ Inprevioussections,aseparateGNNwastrainedtolearnacompres
+sionschemetailoredtoaspecificnetwork.Despitethesatisfactory
+ compressionresults, learninganewneuralnetworkforeachdataset
+ canbecomputationallycostly.Therefore,wegeneralizetheprevious
+ modelandtrainitonalargesetofempiricalnetworks.Weshowthat
+ thisgeneralizationcancompressnewnetworks,theonesithasn’tbeen
+ trainedon,withoutanysignificantlearningcost.
+ First,wegatheradatasetwith2,193real-worldnetworksspanning
+ variousdomains,frombrainsandbiologicaltosocialandmore,with
+ thenumberof nodes ranging from100to2, 495, fromNetwork
+ Repository(NR)75 (formoreinformationaboutthedataset, training,
+ andtestingprocess,pleaseseeSupplementaryNote6).Werandomly
+ selectthenetworkswithsizesmallerthan1000asthetrainingsetand
+ keeptheremainingnetworksasthetestset.Weapplyonemodelto
+ numerousnetworks,compressthemtomacro-networks,andcalculate
+ thelossintermsofpartitionfunctiondeviation.Theresultsdemon
+stratehighlyeffectivelearningthatcansuccessfullycompressthetest
+ set,generatingmacro-networksthatpreservetheflowofinformation.
+ Thispre-trainedmodeldirectlypossessesthecapabilitytocom
+pressnetworksfromdifferentdomainsandsizes,anditreducesthe
+ computational complexitybyordersofmagnitude, outperforming
+ existingmethods.Moretechnically,thetimecomplexityofourmodel
+ isO(N+E),whereNisthesystem’ssizeandEthenumberofconnec
+tions–whichoveralldropstoO(n)forsparsenetworks–whilethetime
+ complexityofothercompressionmodelsoftenreachesO(N3) (box
+covering,laplacianRG)orO(N2)(geometricRG).Tobetterquantifythe
+ model’stimecomplexity,wevalidateditonadatasetwithamuch
+ widerrangeofsizes.TheresultsareshowninFig.6.
+ Discussion
+ Innetworkcompressionmethods,amethodthatcanaccuratelypre
+servethefullpropertiesofthenetworkinformationflowacrossdif
+ferentstructuralpropertiesisstillmissing.Traditionalmethodsrelyon
+ setsofrulesthat identifygroupsofnodesinanetworkandcoarse
+grainthemtobuildcompressedrepresentations. Instead,wetakea
+ data-drivenapproachandextract thebestcoarse-grainingrulesby
+ machinelearningandadjustingmodelparametersthroughtraining.In
+ contrastwithmostnetworkcompressionmethodsthattrytomax
+imizethestructural similaritybetweenthemacro-networkandthe
+ originalnetwork,ourmodeltendstopreservetheflowofinformation
+ inthenetworkand,therefore, isnaturallysensitivetobothstructure
+ anddynamics.
+ Toproxytheflowofinformation,wecouplediffusiondynamics
+ withnetworksandconstructnetworkdensitymatrices—i.e.,mathe
+matical generalizations of probability distributions that enable
+ information-theoreticdescriptionsofinterconnectednon-equilibrium
+ systems.Densitymatricesprovidemacroscopicdescriptorsof infor
+mationdynamics, includingthediversityofpathwaysandtheten
+dencyofstructuretoblocktheflow.Here,weshowthatsimilarto
+ equilibrium statistical physics, the network counterpart of the
+ Fig.5|Compressingempiricalnetworksfromdifferentdomains.Intheleft
+ subplot,weshowthepre-andpost-compressionpartitionfunctionerror(mea
+suredbyMAE)for25networksfrom8differentdomainsatvariouscompression
+ ratios,rangingfrom1%to25%.Intherightsubplot,wedisplaytherelationship
+ betweentheaveragecompressionerrorandthenetwork’sdensitywhenthe
+ compressionratioisgreaterthan0.1(atthispoint,thecompressionerrorisnot
+ quitesensitivetothecompressionsize,whichcanbeconsideredasthebest
+ compressionerrorachievablebythemodelwithoutbeinglimitedbysize).
+ Fig.6|Pre-TrainedMode:RunningTimevs.NetworkSize.Inthisfigure,weshow
+ thetimerequiredforapre-trainedmodeltorunonW-Snetworkswithdifferent
+ numbersofnodesandconnections.TheX-axisrepresentsthenumberofnodes,
+ andtheY-axisshowsthetimeneededtocompressthenetwork.
+ Article https://doi.org/10.1038/s41467-025-56034-2
+ NatureCommunications|        (2025) 16:1605 8
+Article
+ https://doi.org/10.1038/s41467-025-56034-2
+ partition function contains all information about other macroscopic
+ descriptors. Therefore, to preserve the flow of information through
+ thecompression,wetrainthemodelusingalossfunctionthatencodes
+ the partition function deviation of the compressed system from the
+ original networks.
+ We use the model to compress various synthetic networks of
+ different classes and demonstrate its effective performance, even for
+ large compressions. Then, we analyze empirical networks, including
+ the USairports and researchers’ collaborations, confirming the results
+ obtained from the analysis of synthetic networks.
+ Our work shows thatone wayto preserve the information flow is
+ to merge the nodes with similar local structures. With this approach,
+ we can reduce redundant structures while preserving the function of
+ these structures in the original network. Note that this result is an
+ emergent feature of our approach and not an imposed one. One sig
+nificant feature of our method is that it is not constrained to localized
+ group structures: units that are merged together through the com
+pression process are not necessarily neighborsand caneven belong to
+ different communities.
+ Wetrain the neural networks on thousands of empirical networks
+ and show the effectiveness of generalization and excellent perfor
+mance on new data. This results in a significant reduction in time
+ complexity. While the time complexity of other compression models
+ often reaches O(N3) (box-covering, laplacian RG) or O(N2)(geometric
+ RG), our approach reduces it to O(N + E), where N is the number of
+ nodesandErepresentsthenumberofedges,enablingourapproachto
+ compress networks of sizes that are unmanageable by other approa
+ches. Therefore, our workdemonstratesthefeasibility of compressing
+ large-scale networks.
+ Despite these advantages, our model still has limitations. While it
+ can flexibly handle network structures from different domains, the
+ statistical characteristics of networks also affect the model’sperfor
+mance. Our experiments on more real network data have shown that
+ denser networks are harder to preserve the partition function after
+ compression. Furthermore, although we have proven that the model
+ can preserve information flow, we cannot guarantee the preservation
+ ofallstructuralfeatures.Experimentshaveshownthatwecanmaintain
+ the scale-free nature of the degree distribution after compressing BA
+ networks, but we still cannot ensure the preservation of other impor
+tant structural properties (see Supplementary Fig. 11 for related
+ experiments).
+ Our work combines recent advances in the statistical physics of
+ complexnetworksandmachinelearningtotackleoneof themost
+ formidable problemsattheheartofcomplexity science:compression.
+ Our findings highlight that to compress empirical networks it is
+ required that nodes ofsimilarlocalstructures unify atdifferent scales,
+ behaving like vessels for the flow of information. Our fast and physi
+cally groundedcompressionmethodnotonlyshowcasesthepotential
+ for application in a wide variety of disciplines where the flow within
+ interconnected systems is essential, from urban transportation to
+ connectomics, but also sheds light on the multiscale nature of infor
+mation exchange between network’s components.
+ Methods
+ Training methodology
+ Our model is trained in a supervised learning manner, with our ulti
+mate supervision objective being to ensure as much similarity as
+ possible between the partition function curves of the macro and ori
+ginal networks. The partition function, a function of time, ultimately
+ converges. In principle, we cannot directly compare and calculate
+ losses between two functions. Therefore, we uniformly select ten
+ points from the logarithmic interval of time before the partition
+ function converges, composing a vector as the representation of the
+ partition function. The aim is to minimize the Mean Absolute Error
+ (MAE) between these two vectors.
+ In most scenarios, we also utilize another cross-entropy loss
+ function to expedite the optimization process. Specifically, we
+ randomly select two rows (indicating the grouping status of two
+ nodes) from the grouping matrix and compute their cross-entropy,
+ aiming to maximize this value as an alternative optimization
+ objective. This loss function encourages the model to partition
+ distinct nodes into separate supernodes, thereby accelerating the
+ optimization process. The final loss function is determined by a
+ weighted sum of this cross-entropy optimization objective and the
+ similarity of the normalized partition functions, with different
+ weights assigned to each.
+ Model parameter
+ In this section, we delineate the hyperparameters used during model
+ training, enabling interested readers to reproduce our experimental
+ results. Generally speaking, our model does not exhibit particular
+ sensitivity towards hyperparameters.
+ • Hyperparameter Settings for Network-Specific C
+ ompre
+ s
+sion Model– Epochs:wetrainthemodelfor15000epochsuntilitconverge;– Activation function: ReLU Function– Eachlayer learns an additive bias– Hiddenneurons in GIN layer: 128– Numoflayers in GIN: 1– Learning Rate: fixed to 0.001– Weightforloss functions: 0.99 for partition function loss and
+ 0.01 for cross-entropy loss
+ • Hyperparameter Settings for Compression Model for multiple
+ networks– Epochs:wetrainthemodelfor3000epochsuntilitconverge;– Activation function: ReLU Function– Eachlayer learns an additive bias– Hiddenneurons in GIN layer: 128– Numoflayers in GIN: 1– Learning Rate: fixed to 0.001– Weightforloss functions: 0.99 for partition function loss and
+ 0.01 for cross-entropy loss
+ Two target functions
+ Our model’s overall goal is to compress network size while ensuring
+ the normalized partition function remains unchanged, with different
+ normalization methods leading to different specific target functions.
+ AssumingtheoriginalnetworkhasNnodeswithapartitionfunctionZ,
+ andthecompressednetworkhasN0 nodeswithapartitionfunctionZ0,
+ the twotarget functions areZ
+ N =
+ Z0
+ N0 
+and
+ Z 1
+ N 1 =Z0 1
+ N0 1
+ . Under all other equal
+ conditions, the former target allows us to derive a relationship for the
+ change in entropy as S0 =S logðN=N0Þ,whereS0 denotes the entropy
+ of the compressed graph, meaning the shape of the entropy curve
+ remains unchanged after compression (see Supplementary Fig. 7 for
+ numericalresults).Thelatterensuresthatthenormalizedresultsofthe
+ partition function range from 0 to 1, better preserving the original
+ network’s eigenvalue distribution (see Supplementary Fig. 12 for
+ experimentalresults). Unless otherwise specified, allresults presented
+ in the paper and supplementary materials are obtained under the first
+ targetfunction.Wehavealsoconductedexperimentsusingthesecond
+ target function; pleaserefer to the SupplementaryFig.13 for results on
+ synthetic network compression results by the second target function.
+ Bysetting different target functions, we have enriched the methods of
+ network compression from different perspectives.
+ Reporting summary
+ Further information on research design is available in the Nature
+ Portfolio Reporting Summary linked to this article.
+ Nature Communications|        (2025) 16:1605 
+9
+Article
+ https://doi.org/10.1038/s41467-025-56034-2
+ Data availability
+ All data used in this study can be accessed at our GitHub repository:
+ https://github.com/3riccc/nfc_model or https://doi.org/10.5281/zenodo.
+ 1425224376.
+ Code availability
+ All code used in this study can be accessed at our GitHub repository:
+ https://github.com/3riccc/nfc_model or https://doi.org/10.5281/zenodo.
+ 1425224376.
+ References
+ 1.
+ 2.
+ Boccaletti, S., Latora, V., Moreno, Y., Chavez, M. & Hwang, D.-U.
+ Complex networks: structure and dynamics. Phys. Rep. 424,
+ 175–308 (2006).
+ Barabási, A.-L. & Albert, R. Emergence of scaling in random net
+works. science 286,509–512 (1999).
+ 3. Watts, D. J. & Strogatz, S. H. Collective dynamics of ‘small-world’
+ networks. Nature 393, 440–442 (1998).
+ 4. Newman,M. E. Modularity and community structure in networks.
+ Proc.NatlAcad.Sci.103,8577–8582 (2006).
+ 5.
+ Ravasz, E. & Barabási, A.-L. Hierarchical organization in complex
+ networks. Phys.Rev.E67, 026112 (2003).
+ 6. Clauset,A.,Moore,C.&Newman,M.E.Hierarchicalstructureand
+ the prediction of missing links in networks. Nature 453,98–101
+ (2008).
+ 7. Gao,J.,Buldyrev,S.V.,Stanley,H.E.&Havlin,S.Networksformed
+ from interdependent networks. Nat. Phys. 8,40–48 (2011).
+ 8.
+ De Domenico, M. et al. Mathematical formulation of multilayer
+ networks. Phys.Rev.X3,041022(2013).
+ 9. Kivelä, M. et al. Multilayer networks. J. complex Netw. 2,203–271
+ (2014).
+ 10. Boccaletti, S. et al. The structure and dynamics of multilayer net
+works. Phys. Rep. 544,1–122 (2014).
+ 11.
+ Domenico, M. D. Moreisdifferent in real-world multilayer networks.
+ Nat. Phys. In Press https://doi.org/10.1038/s41567-023-02132-1
+ (2023).
+ 12. Benson, A.R., Gleich, D. F. & Leskovec, J. Higher-order organization
+ of complex networks. Science 353,163–166 (2016).
+ 13. Lambiotte, R., Rosvall, M. & Scholtes, I. From networks to optimal
+ higher-order models of complex systems. Nat. Phys. 15,313–320
+ (2019).
+ 14. Battiston, F. et al. The physics of higher-order interactions in com
+plex systems. Nat. Phys. 17,1093–1098 (2021).
+ 15. Bianconi, G.Higher-order networks (Cambridge University Press,
+ 2021). https://doi.org/10.1017/9781108770996.
+ 16. Rosas,F.E.etal.Disentanglinghigh-ordermechanismsandhigh
+order behaviours in complex systems. Nat. Phys. 18,476–477
+ (2022).
+ 17. Karlebach, G. & Shamir, R. Modelling and analysis of gene reg
+ulatory networks. Nat. Rev. Mol. cell Biol. 9, 770–780 (2008).
+ 18. Pratapa, A., Jalihal, A. P., Law, J. N., Bharadwaj, A. & Murali, T.
+ Benchmarking algorithms for gene regulatory network inference
+ fromsingle-cell transcriptomic data. Nat. methods 17,147–154 (2020).
+ 19. Cong, Q., Anishchenko, I., Ovchinnikov, S. & Baker, D. Protein
+ interaction networks revealed by proteome coevolution. Science
+ 365,185–189 (2019).
+ 20. Farahani,F.V.,Karwowski,W.&Lighthall,N.R.Applicationofgraph
+ theory for identifying connectivity patterns in human brain net
+works: a systematic review. Front. Neurosci. 13, 585 (2019).
+ 21. Suárez,L.E.,Markello,R.D.,Betzel,R.F.&Misic,B.Linkingstructure
+ and function in macroscale brain networks. Trends Cogn. Sci. 24,
+ 302–315 (2020).
+ 22. Ding, R. et al. Application of complex networks theory in urban
+ traffic network researches. Netw. Spat. Econ. 19,1281–1317 (2019).
+ 23. Johnson, N. F. et al. New online ecology of adversarial aggregates:
+ isis and beyond. Science 352,1459–1463 (2016).
+ 24. Centola, D., Becker, J., Brackbill, D. & Baronchelli, A. Experimental
+ evidence for tipping points in social convention. Science 360,
+ 1116–1119 (2018).
+ 25. Snijders, T. A. The statistical evaluation of social network dynamics.
+ Sociological Methodol. 31,361–395 (2001).
+ 26. Tyson, J. J., Chen, K. & Novak, B. Network dynamics and cell phy
+siology. Nat. Rev. Mol. cell Biol. 2,908–916 (2001).
+ 27. Guimerà, R., Díaz-Guilera, A., Vega-Redondo, F., Cabrales, A. &
+ Arenas, A. Optimal network topologies for local search with con
+gestion. Phys.Rev.Lett.89,248701(2002).
+ 28. Chavez, M., Hwang, D.-U., Amann, A., Hentschel, H. G. E. & Boc
+caletti, S. Synchronization is enhanced in weighted complex net
+works. Phys.Rev.Lett.94,218701(2005).
+ 29. Arenas, A., Díaz-Guilera, A. & Pérez-Vicente, C. J. Synchronization
+ reveals topological scales in complex networks. Phys.Rev.Lett.96,
+ 114102 (2006).
+ 30. Boguñá, M., Krioukov, D. & Claffy, K. C. Navigability of complex
+ networks. Nat. Phys. 5,74–80 (2008).
+ 31. Gómez-Gardeñes, J., Campillo, M., Floría, L. M. & Moreno, Y.
+ Dynamical organization of cooperation in complex topologies.
+ Phys.Rev.Lett.98,108103(2007).
+ 32. Barzel, B. & Barabási, A.-L. Universality in network dynamics. Nat.
+ Phys. 9,673–681 (2013).
+ 33. Domenico, M. D. & Biamonte, J. Spectral entropies as information
+theoretic tools for complex network comparison. Phys.Rev.X6,
+ 041062 (2016).
+ 34. Harush, U. & Barzel, B. Dynamic patterns of information flow in
+ complex networks. Nat. Commun. 8, 2181 (2017).
+ 35. Domenico, M. D. Diffusion geometry unravels the emergence of
+ functional clusters in collective phenomena. Phys. Rev. Lett. 118,
+ 168301 (2017).
+ 36. Meena, C. et al. Emergent stability in complex network dynamics.
+ Nat. Phys. 19,1033–1042 (2023).
+ 37. Bontorin, S. & Domenico, M. D. Multi pathways temporal distance
+ unravels the hidden geometry of network-driven processes. Com
+mun. Phys. 6,129(2023).
+ 38. Betzel, R. F. &Bassett, D. S.Multi-scale brain networks. Neuroimage
+ 160,73–83 (2017).
+ 39. Ghavasieh, A., Bontorin, S., Artime, O., Verstraete, N. & De Dome
+nico, M. Multiscale statistical physics of the pan-viral interactome
+ unravels the systemic nature of sars-cov-2 infections. Commun.
+ Phys. 4,1–13 (2021).
+ 40. Song, C., Havlin, S. & Makse, H. A. Self-similarity of complex net
+works. Nature 433,392–395 (2005).
+ 41. Song,C.,Gallos,L.K.,Havlin,S.&Makse,H.A.Howtocalculatethe
+ fractal dimension of a complex network: the box covering algo
+rithm. J. Stat. Mech.: Theory Exp. 2007, P03006 (2007).
+ 42. Sun, Y. & Zhao, Y. et al. Overlapping-box-covering method for the
+ fractal dimension of complex networks. Phys. Rev. E 89,042809
+ (2014).
+ 43. Liao, H., Wu, X., Wang, B.-H., Wu, X. & Zhou, M. Solving the speed
+ and accuracy of box-covering problem in complex networks. Phys.
+ A: Stat. Mech. its Appl. 523,954–963 (2019).
+ 44. Kovács, T. P., Nagy, M. & Molontay, R. Comparative analysis of box
+covering algorithms for fractal networks. Appl. Netw. Sci. 6,
+ 73 (2021).
+ 45. Radicchi, F., Ramasco, J. J., Barrat, A. & Fortunato, S. Complex
+ networks renormalization: flows and fixed points. Phys. Rev. Lett.
+ 101,148701(2008).
+ 46. Rozenfeld,H.D.,Song,C.&Makse,H.A.Small-worldtofractal
+ transition in complex networks: a renormalization group approach.
+ Phys.Rev.Lett.104,025701(2010).
+ Nature Communications|        (2025) 16:1605 
+10
+Article
+ https://doi.org/10.1038/s41467-025-56034-2
+ 47. Goh,K.-I., Salvi, G., Kahng, B. & Kim, D. Skeleton and fractal scaling
+ in complex networks. Phys.Rev.Lett.96,018701(2006).
+ 48. García-Pérez, G., Boguñá, M. & Serrano, M. Á. Multiscale unfolding
+ of real networks by geometric renormalization. Nat. Phys. 14,
+ 583–589 (2018).
+ 49. Zheng,M.,García-Pérez, G., Boguñá,M. &Serrano,M.Á.Geometric
+ renormalization of weightednetworks.Commun.Phys.7,97(2024).
+ 50. Boguna,M.etal.Networkgeometry.Nat.Rev. Phys. 3, 114–135(2021).
+ 51. Gfeller, D. & De Los Rios, P. Spectral coarse graining of complex
+ networks. Phys.Rev.Lett.99,038701(2007).
+ 52. Villegas, P., Gili, T., Caldarelli, G. & Gabrielli, A. Laplacian renor
+malization group for heterogeneous networks. Nat. Phys. 19,
+ 445–450 (2023).
+ 53. Ghavasieh, A., Nicolini, C. & De Domenico, M. Statistical physics of
+ complex information dynamics. Phys.Rev.E102, 052304 (2020).
+ 54. Ghavasieh, A. & De Domenico, M. Generalized network density
+ matrices for analysis of multiscale functional diversity. Phys.Rev.E
+ 107, 044304 (2023).
+ 55. Ghavasieh, A. &DeDomenico,M.Diversity ofinformation pathways
+ drives scaling and sparsity in real-world networks. Nat. Phys. 20,
+ 512–519 (2024).
+ 56. Ghavasieh,A.&DeDomenico,M.Enhancingtransportpropertiesin
+ interconnected systems without altering their structure. Phys. Rev.
+ Res. 2, 013155 (2020).
+ 57. Zhou, J. et al. Graph neural networks: A review of methods and
+ applications. AI open 1,57–81 (2020).
+ 58. Wu, L., Cui, P., Pei, J., Zhao, L. & Guo, X. Graph neural networks:
+ foundation, frontiers and applications. In Proceedings of the 28th
+ ACMSIGKDDConferenceonKnowledgeDiscoveryandDataMining,
+ 4840–4841 (2022).
+ 59. Barrat, A., Barthelemy, M. & Vespignani, A.Dynamical processes on
+ complex networks (Cambridge university press, 2008).
+ 60. Villegas,P.,Gabrielli,A.,Santucci,F.,Caldarelli,G.&Gili,T.
+ Laplacian paths in complex networks: information core emerges
+ from entropic transitions. Phys. Rev. Res. 4, 033196 (2022).
+ 61. Benigni,B.,Ghavasieh,A.,Corso,A.,d’Andrea,V.&Domenico,M.D.
+ Persistence of information flow: a multiscale characterization of
+ human brain. Netw. Neurosci. 5,831–850 (2021).
+ 62. Ghavasieh,A.,Stella, M.,Biamonte,J. &Domenico,M.D.Unraveling
+ the effects of multiscale network entanglement on empirical sys
+tems. Commun. Phys. 4, 129 (2021).
+ 63. Ghavasieh, A., Bertagnolli, G. & De Domenico, M. Dismantling the
+ information flow in complex interconnected systems. Phys. Rev.
+ Res. 5, 013084 (2023).
+ 64. Wu, Z. et al. A comprehensive survey on graph neural networks.
+ IEEE Trans. neural Netw. Learn. Syst. 32,4–24 (2020).
+ 65. Waikhom, L. & Patgiri, R. A survey of graph neural networks in var
+ious learning paradigms: methods, applications, and challenges.
+ Artif. Intell. Rev. 56,6295–6364 (2023).
+ 66. Kipf, T. N. & Welling, M. Semi-supervised classification with graph
+ convolutional networks. In International Conference on Learning
+ Representations (ICLR) (2017).
+ 67. Veličković,P.etal.Graphattentionnetworks.International Con
+ference on Learning Representations (ICLR) (2018).
+ 68. Xu, K., Hu, W., Leskovec, J. & Jegelka, S. How powerful are graph
+ neural networks? International Conference on Learning Repre
+sentations (ICLR) (2019).
+ 69. Müller, L., Galkin, M., Morris, C. & Rampášek, L. Attending to graph
+ transformers. Transactions of Machine Learning Research
+ (TMLR) (2024).
+ 70. Xiao, S., Wang, S., Dai, Y. & Guo, W. Graph neural networks in node
+ classification: survey and evaluation. Mach.Vis.Appl.33, 4 (2022).
+ 71. Zhang, Z. et al. A general deep learning framework for network
+ reconstruction and dynamics learning. Appl. Netw. Sci. 4,
+ 1–17 (2019).
+ 72. Guo, X. & Zhao, L. A systematic survey on deep generative models
+ for graph generation. IEEE Trans. Pattern Anal. Mach. Intell. 45,
+ 5370–5390 (2022).
+ 73. Peng, Y., Choi, B. & Xu, J. Graph learning for combinatorial optimi
+zation: a survey of state-of-the-art. Data Sci. Eng. 6, 119–141 (2021).
+ 74. Newman, M. E. J. Finding community structure in networks using
+ the eigenvectors of matrices. Phys.Rev.E74,036104(2006).
+ 75. Rossi, R. & Ahmed, N. The network data repository with interactive
+ graph analytics and visualization. In Proceedings of the AAAI con
+ference on artificial intelligence,vol.29(2015).
+ 76. Zhang, Z., Ghavasieh, A., Zhang, J. & Domenico, M. D. Nfc model
+ https://doi.org/10.5281/zenodo.14252242 (2024).
+ Acknowledgements
+ MDDacknowledges partial financial support from MUR funding within
+ the FIS (DD n. 1219 31-07-2023) Project no. FIS00000158 and from the
+ INFN grant “LINCOLN”. Z.Z. is also supported by the Chinese Scholar
+ship Council. We thank the Swarma-Kaifeng Workshop co-organized by
+ Swarma Club and Kaifeng Foundation for inspiring discussions.
+ Author contributions
+ M.D.D conceived and directed the project, Z.Z and J.Z designed the
+ model, M.D.D and A.G conducted the theoretical analysis. Z.Z con
+ductedtheexperiments.M.D.D,Z.ZandA.Gwrotethepaper.Allauthors
+ discussed the results and commented on the manuscript.
+ Competing interests
+ The authors declare no competing interests.
+ Additional information
+ Supplementary information The online version contains
+ supplementary material available at
+ https://doi.org/10.1038/s41467-025-56034-2.
+ Correspondence and requests for materials should be addressed to
+ Zhang Zhang or Manlio De Domenico.
+ Peer review information Nature Communications thanks Angeles Ser
+rano, and the other, anonymous, reviewer(s) for their contribution to the
+ peer review of this work. A peer review file is available.
+ Reprints and permissions information is available at
+ http://www.nature.com/reprints
+ Publisher’s note Springer Nature remains neutral with regard to jur
+isdictional claims in published maps and institutional affiliations.
+ Open Access This article is licensed under a Creative Commons
+ Attribution-NonCommercial-NoDerivatives 4.0 International License,
+ which permits any non-commercial use, sharing, distribution and
+ reproduction in any medium or format, as long as you give appropriate
+ credit to the original author(s) and the source, provide a link to the
+ Creative Commons licence, and indicate if you modified the licensed
+ material. Youdonothavepermissionunderthislicencetoshareadapted
+ material derived from this article or parts of it. The images or other third
+ party material in this article are included in the article’s Creative
+ Commons licence, unless indicated otherwise in a credit line to the
+ material. If material is not included in the article’s Creative Commons
+ licence andyourintendeduseisnotpermittedbystatutoryregulationor
+ exceeds the permitted use, you will need to obtain permission directly
+ from the copyright holder. To view a copy of this licence, visit http://
+ creativecommons.org/licenses/by-nc-nd/4.0/.
+ ©The Author(s) 202
